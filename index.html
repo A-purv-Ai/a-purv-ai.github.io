@@ -1,13 +1,290 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Redirecting to Portfolio...</title>
-    <link rel="canonical" href="https://github.com/A-purv-Ai/stock-data-pipeline"/>
-    <meta http-equiv="refresh" content="0; url=https://github.com/A-purv-Ai/stock-data-pipeline">
-  </head>
-  <body>
-    <h1>Redirecting to my portfolio...</h1>
-    <p>If you are not redirected automatically, please <a href="https://github.com/A-purv-Ai/stock-data-management-and-data-to-visualization-pipeline">click here</a>.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apurva Upadhyay | Data Science & AI Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portfolio of Apurva Upadhyay, showcasing projects in AI, Machine Learning, and Data Science.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0A0A10;
+            --card-bg: rgba(25, 25, 35, 0.66);
+            --border-color: rgba(60, 60, 80, 0.52);
+            --text-primary: #E0E0E8;
+            --text-secondary: #a0b0c8;
+            --accent: #00d1ff;
+            --accent-glow: rgba(0, 209, 255, 0.4);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 15% 22%, var(--accent-glow) 0%, transparent 30%),
+                        radial-gradient(circle at 82% 74%, #8E2DE240 0%, transparent 25%);
+            animation: move-glow 17s linear infinite alternate;
+        }
+        @keyframes move-glow {
+            from { transform: translate(0, 0);}
+            to { transform: translate(70px, 55px) rotate(-6deg);}
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 4.5rem 2rem 3rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.6rem;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(90deg,#F9FAFB 0%, var(--accent) 70%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero .subtitle {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.35rem;
+            letter-spacing: .04em;
+        }
+        .hero .bio {
+            font-size: 1.06rem;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            color: var(--text-secondary);
+        }
+        .social-links {
+            margin-bottom: 1.5em;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 0.85rem;
+            transition: transform 0.18s ease;
+        }
+        .social-links a:hover { transform: scale(1.13);}
+        .social-links svg {
+            width: 32px; height: 32px;
+            fill: var(--text-secondary);
+            transition: fill 0.21s ease;
+        }
+        .social-links a:hover svg { fill: var(--accent);}
+
+        .projects-section h2 {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.4rem;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            text-shadow: 0 0 18px var(--accent-glow);
+            font-weight: 800;
+            letter-spacing: .04em;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(326px, 1fr));
+            gap: 2.3rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(17px);
+            -webkit-backdrop-filter: blur(17px);
+            border: 1.2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.15rem 2.1rem 2.2rem 2.1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 30px var(--accent-glow), 0 1.5px 8px #0001;
+            transition: transform 0.2s ease, box-shadow 0.23s ease, border-color 0.26s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-9px) scale(1.012);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow), 0 5px 22px #00d1ff23;
+        }
+        .project-icon {
+            font-size: 2.45rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 7px #00d1ff40)
+        }
+        .project-card h3 {
+            font-size: 1.28rem;
+            margin: 0 0 1rem 0;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(90deg, #fff, var(--accent) 85%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .project-card p {
+            font-size: 1.04rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            flex-grow: 1;
+            margin-bottom: 1.25rem;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .project-tags span {
+            background: rgba(0, 209, 255, 0.13);
+            color: var(--accent);
+            padding: 0.31rem 0.73rem;
+            border-radius: 50px;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+        .project-links a, .project-links span {
+            text-decoration: none;
+            padding: 0.78rem 1.55rem;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.21s ease;
+            display: inline-block;
+            margin-right: 0.65rem;
+            text-align: center;
+            font-size: 1.02rem;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary {
+            background: linear-gradient(95deg,#00d1ff 70%,#62d8fa 100%);
+            color: var(--dark-bg);
+            box-shadow: 0 5px 22px #00d1ff22;
+        }
+        .btn-primary:hover {
+            background: #fff;
+            color: var(--accent);
+        }
+        .btn-disabled {
+            background: rgba(50, 70, 100, 0.44);
+            color: #909db8;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .coming-soon-status {
+            color: #fbbf24;
+            font-weight: bold;
+            margin-top: 1.13rem;
+            letter-spacing: .01em;
+            text-align: center;
+            font-size: 1em;
+        }
+        footer {
+            text-align: center;
+            padding: 2.3rem;
+            margin-top: 3.2rem;
+            color: #909db8;
+            border-top: 1px solid var(--border-color);
+        }
+        @media (max-width: 950px) { .container{ padding:2rem .5rem; } }
+        @media (max-width: 750px) {.container{padding: 1.2rem .12rem;} .hero h1{font-size:2.1rem;} .projects-section h2{font-size:1.18rem;} }
+        @media (max-width: 500px){
+            .project-card{padding:.9em .5em;}
+            .hero h1{ font-size: 1.3rem;}
+            .projects-section h2{ font-size: 1rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Apurva Upadhyay</h1>
+            <div class="subtitle">Data Science & AI — Learning by Experimenting ✨</div>
+            <div class="bio">
+                Analytics explorer, code builder, data enthusiast.<br>
+                This is a collection of learning-by-doing, with real datasets, tools, and curiosity.
+            </div>
+            <div class="social-links">
+                <a href="mailto:apurvaupadhyayai@gmail.com" target="_blank" title="Email">
+                    <svg role="img" viewBox="0 0 24 24"><title>Email</title><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+                </a>
+                <a href="https://linkedin.com/in/upadhyayapurva" target="_blank" title="LinkedIn">
+                    <svg role="img" viewBox="0 0 24 24"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+                </a>
+                <a href="https://github.com/A-purv-Ai" target="_blank" title="GitHub">
+                    <svg role="img" viewBox="0 0 24 24"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z"/></svg>
+                </a>
+            </div>
+        </header>
+        <main class="projects-section">
+            <h2>Projects</h2>
+            <div class="project-grid">
+
+                <div class="project-card">
+                    <span class="project-icon">📈</span>
+                    <h3>Stock Data Pipeline</h3>
+                    <p>From scratch to dashboard: fetch, manage, and visualize stock market data using Python, CRUD, and Tableau. My first major hands-on project in data engineering and analytics.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>CRUD</span><span>SQLite</span><span>Tableau</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://a-purv-ai.github.io/stock-data-pipeline/" class="btn-primary" target="_blank">Visit Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🤖</span>
+                    <h3>Email Dashboard & Chatbot</h3>
+                    <p>Automate your inbox: AI-powered project coming soon for classifying, querying, and managing email using NLP and LLMs. Watch this space!</p>
+                    <div class="project-tags">
+                        <span>AI</span><span>NLP</span><span>RAG</span><span>Gmail API</span>
+                    </div>
+                    <div class="project-links">
+                         <a href="https://a-purv-ai.github.io/email-chatbot/" class="btn-primary" target="_blank">Visit Project</a>
+                    </div>
+                    <div class="coming-soon-status">In Development</div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🛰️</span>
+                    <h3>ISRO Launch Analysis</h3>
+                    <p>Discover mission patterns, predict launch outcomes, and visualize space analytics with machine learning and dashboards.</p>
+                    <div class="project-tags">
+                        <span>ML</span><span>Tableau</span><span>Streamlit</span><span>XGBoost</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://a-purv-ai.github.io/isro-analysis/" class="btn-primary" target="_blank">Visit Project</a>
+                    </div>
+                    <div class="coming-soon-status">Coming Soon</div>
+                </div>
+                
+                <div class="project-card">
+                    <span class="project-icon">🧩</span>
+                    <h3>More Projects Ahead</h3>
+                    <p>New data journeys, experiments, and stories will appear here as I keep learning, coding, and building.</p>
+                    <div class="project-tags">
+                        <span>Your Idea?</span><span>Stay Tuned</span>
+                    </div>
+                    <div class="project-links">
+                        <span class="btn-disabled">Coming Soon</span>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Apurva Upadhyay. Built with passion and code.</p>
+        </footer>
+    </div>
+</body>
 </html>
