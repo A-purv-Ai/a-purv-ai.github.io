@@ -1,0 +1,212 @@
+/* CSS Variables for easy theming */
+:root {
+    --primary-glow: rgba(148,87,235,0.5);
+    --secondary-glow: rgba(87,137,235,0.5);
+    --accent-tableau: #eab308;
+    --accent-github: #8A4BEB;
+}
+
+/* Base styles */
+* { 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background: #111827;
+    color: #F9FAFB;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height:100vh; 
+    padding:2rem; 
+    overflow: hidden; 
+    position:relative;
+}
+
+/* Background animation */
+.background-glow {
+    position:fixed; 
+    top:50%; 
+    left:50%;
+    width:800px; 
+    height:800px;
+    background:radial-gradient(circle, var(--primary-glow) 0%, var(--secondary-glow) 50%, transparent 70%);
+    transform:translate(-50%,-50%);
+    animation:rotateGlow 25s linear infinite;
+    filter:blur(100px); 
+    opacity:0.6; 
+    z-index:-1;
+}
+
+@keyframes rotateGlow {
+    0% {transform:translate(-50%,-50%) rotate(0deg);}
+    100% {transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+/* Portfolio tab */
+.portfolio-tab {
+    position:fixed; 
+    top:40px; 
+    right:-10px;
+    background:linear-gradient(135deg,#9457EB 0%,#5789EB 100%);
+    color:white; 
+    padding:12px 24px 12px 30px; 
+    border-radius:50px 0 0 50px;
+    text-decoration:none; 
+    font-weight:600; 
+    font-size:1rem;
+    z-index:100; 
+    box-shadow:-5px 5px 25px rgba(0,0,0,0.4);
+    display: flex; 
+    align-items:center; 
+    gap:8px;
+    transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    animation:wiggle 4s ease-in-out infinite;
+}
+
+.portfolio-tab:hover { 
+    right:0; 
+    transform:scale(1.05); 
+    box-shadow:-8px 8px 35px rgba(0,0,0,0.5); 
+    animation-play-state:paused;
+}
+
+@keyframes wiggle {
+    0%,100% {transform:rotate(-1deg) translateX(0px);}
+    25% {transform:rotate(1deg) translateX(5px);}
+    50% {transform:rotate(-2deg) translateX(0px);}
+    75% {transform:rotate(2deg) translateX(-5px);}
+}
+
+/* Main card */
+.card {
+    position:relative; 
+    z-index:1; 
+    max-width:650px; 
+    width:100%;
+    background:rgba(31,41,55,0.52); 
+    backdrop-filter:blur(26px); 
+    border:1px solid rgba(255,255,255,0.11); 
+    border-radius:24px;
+    padding:2.7rem 3rem; 
+    text-align:center;
+    box-shadow:0 10px 48px rgba(0,0,0,0.33);
+}
+
+/* Project elements */
+.project-icon { 
+    font-size:3rem; 
+    line-height:1; 
+    margin-bottom:0.5rem; 
+    animation:floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon { 
+    0%,100%{transform:translateY(0);} 
+    50%{transform:translateY(-12px);} 
+}
+
+h1 {
+    font-size:2.5rem; 
+    font-weight:800;
+    background:linear-gradient(90deg,#E5E7EB,#9CA3AF);
+    -webkit-background-clip:text; 
+    -webkit-text-fill-color:transparent;
+    background-clip:text; 
+    margin-bottom:1rem;
+}
+
+.description { 
+    color:#D1D5DB; 
+    font-size:1.16rem; 
+    line-height:1.6; 
+    margin-bottom:1.6rem;
+}
+
+/* Tech stack */
+.tech-stack { 
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:.8rem; 
+    margin-bottom:2.1rem;
+}
+
+.badge { 
+    background:rgba(255,255,255,0.1); 
+    color:#e5e7eb; 
+    padding:0.5rem 1rem;
+    border-radius:50px; 
+    font-weight:600; 
+    font-size:0.9rem; 
+    border:1px solid transparent;
+    transition:all 0.3s ease;
+}
+
+.badge:hover { 
+    border-color:#9457EB; 
+    color:#fff;
+}
+
+/* Call-to-action buttons */
+.cta-row { 
+    display:flex; 
+    justify-content:center; 
+    gap:1.3em; 
+    flex-wrap:wrap; 
+    margin-bottom:1.8em;
+}
+
+.cta-btn {
+    display:inline-block; 
+    text-decoration:none;
+    font-weight:800; 
+    font-size:1.08em; 
+    padding:1rem 2.3rem; 
+    border-radius:48px;
+    background:linear-gradient(135deg,#8A4BEB 0%,#4B7CEB 100%);
+    color:#FFF; 
+    box-shadow:0 5px 20px rgba(138,75,235,0.23);
+    transition:all 0.24s;
+}
+
+.cta-btn.tableau {
+    background:linear-gradient(93deg,#eab308 23%,#fde68a 100%);
+    color:#18181b;
+    box-shadow:0 4px 12px #eab30830;
+}
+
+.cta-btn:hover {
+    transform:translateY(-5px) scale(1.04);
+}
+
+/* Screenshot */
+.screenshot {
+    width:100%; 
+    max-width:340px; 
+    margin:auto; 
+    margin-bottom:1em; 
+    border-radius:13px; 
+    box-shadow:0 2px 22px #818cf834;
+    display:block;
+}
+
+/* Responsive design */
+@media (max-width: 768px){
+    body{
+        padding:1rem;
+    }
+    .card{
+        padding:1.4em 0.6em;
+    }
+    h1{
+        font-size:1.5em;
+    }
+    .cta-row{
+        flex-direction:column;
+        gap:.6em;
+    }
+}
