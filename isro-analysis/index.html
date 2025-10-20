@@ -4,254 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISRO Launch Success & Trend Analysis | Apurva Upadhyay</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --dark-bg: #0d1b2a;
-            --card-bg: rgba(23, 37, 51, 0.75);
-            --border-color: rgba(0, 209, 255, 0.3);
-            --text-primary: #e0e6f0;
-            --text-secondary: #a0c4ff;
-            --accent: #00d1ff;
-            --accent-glow: rgba(0, 209, 255, 0.5);
-            --rocket-body: #EAEAEA;
-            --rocket-accent: #c0392b;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Manrope', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            overflow: hidden;
-        }
-
-        /* --- Animated Starfield Background --- */
-        #starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
-        }
-
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- Portfolio Tab --- */
-        .portfolio-tab {
-            position: fixed;
-            top: 40px;
-            right: -10px;
-            background: linear-gradient(135deg, #FF6F00 0%, #F57C00 100%);
-            color: white;
-            padding: 12px 24px 12px 30px;
-            border-radius: 50px 0 0 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            z-index: 100;
-            box-shadow: -5px 5px 25px rgba(0, 0, 0, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: tabPulse 2s ease-out infinite;
-        }
-        .portfolio-tab:hover {
-            right: 0;
-            transform: scale(1.05);
-            animation-play-state: paused;
-        }
-        @keyframes tabPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        /* --- Main Content Card with Glow Animation --- */
-        .card {
-            position: relative;
-            z-index: 10;
-            max-width: 800px;
-            width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem 3.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: pulseGlow 4s infinite ease-in-out;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow); }
-            50% { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 30px var(--accent-glow); }
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            color: var(--accent);
-            text-shadow: 0 0 15px var(--accent-glow);
-            margin: 0 0 0.5rem 0;
-        }
-
-        .subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2.5rem; }
-        .methods-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-        .method-item { background: rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 1.5rem; border: 1px solid transparent; transition: all 0.3s ease; }
-        .method-item:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-        .method-item h3 { margin: 0 0 0.5rem 0; color: var(--text-primary); }
-        .method-item p { margin: 0; font-size: 0.95rem; color: var(--text-secondary); }
-        .cta-button { display: inline-block; text-decoration: none; background: var(--accent); color: var(--dark-bg); padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; font-size: 1rem; box-shadow: 0 5px 20px var(--accent-glow); transition: all 0.3s ease; }
-        .cta-button:hover { transform: scale(1.05); box-shadow: 0 8px 30px var(--accent-glow); cursor: not-allowed;}
-        .coming-soon {
-            color: #00d1ff;
-            font-size: 1.07em;
-            margin: 2em auto 0 auto;
-            font-style: italic;
-            letter-spacing: 0.01em;
-            text-shadow: 0 0 14px #00d1ff55;
-        }
-
-        /* --- ROCKET LAUNCH ANIMATION --- */
-        .rocket-container {
-            position: fixed;
-            bottom: -170px;
-            left: 0;
-            z-index: 5;
-            /* Immediately start the animation, launch up and right with correct tilt */
-            animation: rocket-launch 6s cubic-bezier(.48,.01,.39,.99) 1.5s forwards;
-            /* Tilt 45deg pointing up and right (natural for a launch) */
-            transform: rotate(45deg);
-        }
-        @keyframes rocket-launch {
-            0% {
-                transform: translate(0, 0) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(120vw, -110vh) rotate(45deg);
-                opacity: 1;
-            }
-        }
-        .rocket {
-            width: 70px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .nose-cone {
-            width: 0;
-            height: 0;
-            border-left: 35px solid transparent;
-            border-right: 35px solid transparent;
-            border-bottom: 60px solid var(--rocket-accent);
-            border-radius: 50% 50% 0 0;
-        }
-        .body {
-            width: 70px;
-            height: 120px;
-            background: var(--rocket-body);
-            position: relative;
-        }
-        .window {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background: #1e2a38;
-            border: 4px solid #888;
-            border-radius: 50%;
-        }
-        .fin {
-            position: absolute;
-            bottom: 5px;
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
-        .fin-left {
-            left: -30px;
-            border-width: 0 30px 40px 0;
-            border-color: transparent var(--rocket-accent) transparent transparent;
-        }
-        .fin-right {
-            right: -30px;
-            border-width: 0 0 40px 30px;
-            border-color: transparent transparent transparent var(--rocket-accent);
-        }
-        .flame-container {
-            position: absolute;
-            bottom: -70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 70px;
-            filter: blur(2px);
-        }
-        .flame {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(#ffdd00, #ff8800);
-            border-radius: 50% 50% 20% 20%;
-            animation: flicker 0.15s infinite alternate;
-        }
-        .flame.f2 { animation-delay: 0.05s; transform: scale(0.8); }
-        .flame.f3 { animation-delay: 0.1s; transform: scale(0.6); }
-        @keyframes flicker {
-            to { transform: scaleY(1.2) scaleX(1.1); opacity: 0.8; }
-        }
-        .smoke-trail {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            width: 20px;
-            height: 0;
-            background: linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent);
-            transform: translateX(-50%);
-            z-index: -1;
-            animation: smoke-grow 6s ease-out 1.5s forwards;
-        }
-        @keyframes smoke-grow {
-            0% { height: 0; opacity: 0.8; }
-            30% { height: 300px; opacity: 0.8; }
-            100% { height: 300px; opacity: 0; }
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .card { padding: 2rem 1.5rem; }
-            h1 { font-size: 2rem; }
-            .portfolio-tab { top: 15px; }
-            .rocket-container { transform: scale(0.8) rotate(45deg);}
-        }
-    </style>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <div id="starfield"></div>
 
     <a href="https://a-purv-ai.github.io" class="portfolio-tab" target="_blank">
@@ -278,6 +40,7 @@
     <main class="card">
         <h1>ISRO Launch Success & Trend Analysis</h1>
         <p class="subtitle">Exploring the past, predicting the future — with data, ML, and visualization.</p>
+        
         <div class="methods-grid">
             <div class="method-item">
                 <h3>EDA & Viz</h3>
@@ -296,7 +59,9 @@
                 <p>Deploying a web UI for predictions.</p>
             </div>
         </div>
+        
         <div class="cta-button" style="pointer-events:none;">Coming Soon to GitHub</div>
+        
         <div class="coming-soon">
             🚀 Final capstone project launching soon.<br>
             Check back for code, dashboards & new discoveries!
