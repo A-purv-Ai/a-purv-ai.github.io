@@ -5,110 +5,20 @@
     <title>Stock Data Pipeline | Apurva Upadhyay</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A hands-on data engineering project by Apurva Upadhyay, featuring a Python-based stock data management and visualization pipeline.">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-glow: rgba(148,87,235,0.5);
-            --secondary-glow: rgba(87,137,235,0.5);
-            --accent-tableau: #eab308;
-            --accent-github: #8A4BEB;
-        }
-
-        * { margin:0; padding:0; box-sizing:border-box;}
-        body {
-            font-family: 'Manrope', sans-serif;
-            background: #111827;
-            color: #F9FAFB;
-            display: flex; justify-content: center; align-items: center;
-            min-height:100vh; padding:2rem; overflow: hidden; position:relative;
-        }
-
-        .background-glow {
-            position:fixed; top:50%; left:50%;
-            width:800px; height:800px;
-            background:radial-gradient(circle, var(--primary-glow) 0%, var(--secondary-glow) 50%, transparent 70%);
-            transform:translate(-50%,-50%);
-            animation:rotateGlow 25s linear infinite;
-            filter:blur(100px); opacity:0.6; z-index:-1;
-        }
-        @keyframes rotateGlow {
-            0% {transform:translate(-50%,-50%) rotate(0deg);}
-            100% {transform:translate(-50%,-50%) rotate(360deg);}
-        }
-
-        .portfolio-tab {
-            position:fixed; top:40px; right:-10px;
-            background:linear-gradient(135deg,#9457EB 0%,#5789EB 100%);
-            color:white; padding:12px 24px 12px 30px; border-radius:50px 0 0 50px;
-            text-decoration:none; font-weight:600; font-size:1rem;
-            z-index:100; box-shadow:-5px 5px 25px rgba(0,0,0,0.4);
-            display: flex; align-items:center; gap:8px;
-            transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-            animation:wiggle 4s ease-in-out infinite;
-        }
-        .portfolio-tab:hover { right:0; transform:scale(1.05); box-shadow:-8px 8px 35px rgba(0,0,0,0.5); animation-play-state:paused;}
-        @keyframes wiggle {
-            0%,100% {transform:rotate(-1deg) translateX(0px);}
-            25% {transform:rotate(1deg) translateX(5px);}
-            50% {transform:rotate(-2deg) translateX(0px);}
-            75% {transform:rotate(2deg) translateX(-5px);}
-        }
-
-        .card {
-            position:relative; z-index:1; max-width:650px; width:100%;
-            background:rgba(31,41,55,0.52); backdrop-filter:blur(26px); 
-            border:1px solid rgba(255,255,255,0.11); border-radius:24px;
-            padding:2.7rem 3rem; text-align:center;
-            box-shadow:0 10px 48px rgba(0,0,0,0.33);
-        }
-        .project-icon { font-size:3rem; line-height:1; margin-bottom:0.5rem; animation:floatIcon 3s ease-in-out infinite;}
-        @keyframes floatIcon { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
-        h1 {
-            font-size:2.5rem; font-weight:800;
-            background:linear-gradient(90deg,#E5E7EB,#9CA3AF);
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            background-clip:text; margin-bottom:1rem;
-        }
-        .description { color:#D1D5DB; font-size:1.16rem; line-height:1.6; margin-bottom:1.6rem;}
-        .tech-stack { display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem; margin-bottom:2.1rem;}
-        .badge { background:rgba(255,255,255,0.1); color:#e5e7eb; padding:0.5rem 1rem;
-            border-radius:50px; font-weight:600; font-size:0.9rem; border:1px solid transparent;
-            transition:all 0.3s ease;}
-        .badge:hover { border-color:#9457EB; color:#fff;}
-        
-        .cta-row { display:flex; justify-content:center; gap:1.3em; flex-wrap:wrap; margin-bottom:1.8em;}
-        .cta-btn {
-            display:inline-block; text-decoration:none;
-            font-weight:800; font-size:1.08em; padding:1rem 2.3rem; border-radius:48px;
-            background:linear-gradient(135deg,#8A4BEB 0%,#4B7CEB 100%);
-            color:#FFF; box-shadow:0 5px 20px rgba(138,75,235,0.23);
-            transition:all 0.24s;
-        }
-        .cta-btn.tableau {
-            background:linear-gradient(93deg,#eab308 23%,#fde68a 100%);
-            color:#18181b;
-            box-shadow:0 4px 12px #eab30830;
-        }
-        .cta-btn:hover {transform:translateY(-5px) scale(1.04);}
-        .screenshot {
-            width:100%; max-width:340px; margin:auto; margin-bottom:1em; border-radius:13px; box-shadow:0 2px 22px #818cf834;
-            display:block;
-        }
-
-        @media (max-width: 768px){
-            body{padding:1rem;}
-            .card{padding:1.4em 0.6em;}
-            h1{font-size:1.5em;}
-            .cta-row{flex-direction:column;gap:.6em;}
-        }
-    </style>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <a href="https://a-purv-ai.github.io/" class="portfolio-tab" target="_blank" title="Go to my main portfolio">
         <span>🏠</span> My Portfolio
     </a>
+    
     <div class="background-glow"></div>
+    
     <main class="card">
         <div class="project-icon">📈</div>
         <h1>Stock Data Pipeline</h1>
@@ -116,6 +26,7 @@
             A hands-on project exploring the practical steps of data engineering.<br>
             Fetch, manage, and visualize real stock data, then build powerful dashboards for insights.<br>
         </p>
+        
         <div class="tech-stack">
             <span class="badge">Python</span>
             <span class="badge">Data Pipelines</span>
@@ -123,11 +34,13 @@
             <span class="badge">CRUD</span>
             <span class="badge">Tableau</span>
         </div>
+        
         <div class="cta-row">
             <a href="https://github.com/A-purv-Ai/stock-data-pipeline" class="cta-btn" target="_blank">View Project on GitHub</a>
             <a href="https://public.tableau.com/app/profile/apurva.upadhyay/viz/StockPerformanceoveradecade/StoryExecutiveOverview"
                class="cta-btn tableau" target="_blank">📊 View Analysis on Tableau</a>
         </div>
+        
         <!-- Optional visualization preview -->
         <!-- <img class="screenshot" src="your_dashboard_thumbnail.png" alt="Tableau Dashboard Preview"> -->
         <!-- You can add a dashboard image here if desired -->
