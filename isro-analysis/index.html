@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISRO Launch Success & Trend Analysis | Apurva Upadhyay</title>
-    
+    <title>ISRO Launch Success Prediction | Apurva Upadhyay</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -38,34 +38,114 @@
     </div>
 
     <main class="card">
-        <h1>ISRO Launch Success & Trend Analysis</h1>
-        <p class="subtitle">Exploring the past, predicting the future — with data, ML, and visualization.</p>
-        
+        <div class="version-badge">
+            <span class="badge-v1">v1.0</span>
+            <span class="badge-text">Production Model — IIT Ropar Minor in AI</span>
+        </div>
+
+        <h1>ISRO Launch Success Prediction</h1>
+        <p class="subtitle">Data-driven launch risk assessment for India's space program — helping commercial operators make informed mission decisions</p>
+
+        <!-- Problem / Motivation -->
         <div class="methods-grid">
             <div class="method-item">
-                <h3>EDA & Viz</h3>
-                <p>Exploring historical data with Tableau.</p>
-            </div>
-            <div class="method-item">
-                <h3>ML Modeling</h3>
-                <p>XGBoost & Random Forest forecasting.</p>
-            </div>
-            <div class="method-item">
-                <h3>Feature Engineering</h3>
-                <p>Tuning models for higher accuracy.</p>
-            </div>
-            <div class="method-item">
-                <h3>Streamlit App</h3>
-                <p>Deploying a web UI for predictions.</p>
+                <h3>🎯 Problem / Motivation</h3>
+                <p><strong>The Challenge:</strong> Commercial satellite operators face enormous costs (crores per mission) with limited ways to assess risk beyond broad historical success rates.</p>
+                <p><strong>Why It Matters:</strong> Recent anomalies — PSLV-C61 (May 2025) and PSLV-C62 (Jan 2026) — showed that traditional "90% success rate" metrics fail to capture mission-specific risks based on payload weight, orbit type, and vehicle configuration.</p>
+                <p><strong>Business Impact:</strong> Insurance companies and commercial operators need granular, feature-driven probability scores to make data-backed decisions about mission budgeting and risk management.</p>
             </div>
         </div>
-        
-        <div class="cta-button" style="pointer-events:none;">Coming Soon to GitHub</div>
-        
-        <div class="coming-soon">
-            🚀 Final capstone project launching soon.<br>
-            Check back for code, dashboards & new discoveries!
+
+        <!-- Approach -->
+        <div class="methods-grid">
+            <div class="method-item">
+                <h3>🛠️ Approach</h3>
+                <p><strong>Data Collection:</strong> Scraped Wikipedia launch tables for PSLV, GSLV, LVM3 missions. Built custom parser to handle multi-satellite missions and complex HTML rowspan structures.</p>
+                <p><strong>Data Cleaning:</strong> Forward-fill technique for sub-satellite rows, regex-based payload mass extraction and summing, filtering to completed missions only (Success/Failure/Partial).</p>
+                <p><strong>Feature Engineering:</strong> Created categorical features: Vehicle Family, Orbit Type, Launch Site. Numerical: Total Payload Mass (kg). Mapped Partial Failures → Failure for strict binary classification.</p>
+                <p><strong>Class Balancing:</strong> Applied SMOTE (Synthetic Minority Over-sampling) to address 8:1 success-to-failure imbalance and prevent model bias toward "always predict success."</p>
+                <p><strong>Model Training:</strong> Random Forest Classifier with GridSearchCV (5-fold CV) for hyperparameter tuning. Optimized for recall on failure class to minimize false negatives in risk assessment.</p>
+                <p><strong>Validation:</strong> Included most recent data through Jan 2026 (PSLV-C62) to ensure model reflects current hardware state.</p>
+            </div>
         </div>
+
+        <!-- Tools & Technologies -->
+        <div class="methods-grid">
+            <div class="method-item">
+                <h3>💻 Tools & Technologies</h3>
+                <ul class="tech-list">
+                    <li><strong>Python</strong> — Core language for all data processing and ML</li>
+                    <li><strong>BeautifulSoup</strong> — Web scraping Wikipedia launch tables</li>
+                    <li><strong>Pandas/NumPy</strong> — Data manipulation and feature engineering</li>
+                    <li><strong>scikit-learn</strong> — Random Forest, GridSearchCV, SMOTE</li>
+                    <li><strong>Matplotlib/Seaborn</strong> — EDA visualizations</li>
+                    <li><strong>Streamlit</strong> — Interactive prediction interface (demo)</li>
+                    <li><strong>Jupyter Notebooks</strong> — Exploratory analysis and documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Key Insights / Results -->
+        <div class="methods-grid">
+            <div class="method-item">
+                <h3>💡 Key Insights / Results</h3>
+                <div class="insight-box">
+                    <p><strong>1. Feature Importance:</strong> Vehicle Family and Payload Mass are dominant predictors. GTO missions with heavy payloads show distinct risk profiles vs. LEO missions.</p>
+                    <p><strong>2. Model Performance:</strong> Random Forest achieved 85%+ test accuracy with balanced recall/precision. SMOTE successfully prevented "always success" predictions.</p>
+                    <p><strong>3. Real-World Validation:</strong> Model correctly flagged higher risk for PSLV-C62 mission profile (Jan 2026 anomaly), demonstrating practical applicability.</p>
+                    <p><strong>4. Actionable Output:</strong> Instead of binary predictions, model outputs probability scores (e.g., "78% success chance") for nuanced risk assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visuals / Demo -->
+        <div class="methods-grid">
+            <div class="method-item">
+                <h3>📊 Visuals / Demo</h3>
+                <p><strong>Feature Importance Chart:</strong> See <code>Output/figures/feature_importance.png</code> in repo showing Vehicle Family (42%) and Payload Mass (31%) as top predictors.</p>
+                <p><strong>Notebooks:</strong> Full EDA with correlation heatmaps, success rate trends, and mission frequency analysis in <code>Notebooks/03_eda_analysis.ipynb</code></p>
+                <p><strong>Interactive Demo:</strong> Streamlit app planned for v1.1 — input mission parameters and get real-time success probability.</p>
+                <div class="link-buttons">
+                    <a href="https://github.com/A-purv-Ai/isro-analysis" target="_blank" class="btn-github">👁️ View Full Project on GitHub</a>
+                    <a href="https://github.com/A-purv-Ai/isro-analysis/blob/main/README.md" target="_blank" class="btn-readme">Read Detailed README</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection / Next Steps -->
+        <div class="methods-grid">
+            <div class="method-item">
+                <h3>🔮 Reflection / Next Steps</h3>
+                <p><strong>What I Learned:</strong> Scraped messy real-world data, handled severe class imbalance, understood domain constraints matter for ML interpretability.</p>
+                <div class="roadmap-box">
+                    <h4>🚀 Roadmap to v2.0: Physics-Aware Constraints</h4>
+                    <p><strong>Current Limitation:</strong> v1.0 predicts success probability for ANY input — even physically impossible missions (e.g., 10-ton payload on PSLV to GTO).</p>
+                    <p><strong>Planned Enhancement:</strong> Integrate rocket-specific payload capacity curves:</p>
+                    <ul>
+                        <li>PSLV payload limits by orbit (LEO: 3.8T, SSO: 1.75T, GTO: 1.4T)</li>
+                        <li>GSLV Mk II/Mk III performance envelopes</li>
+                        <li>LVM3 configuration-specific constraints</li>
+                    </ul>
+                    <p><strong>Technical Approach:</strong> Pre-validation layer checks mission feasibility against rocket specs before invoking ML model. Returns "Mission Not Feasible" if parameters exceed vehicle capability.</p>
+                    <p><strong>Impact:</strong> Moves model from "probability predictor" to "mission advisor" — realistic for commercial operators planning actual launches.</p>
+                </div>
+                <p><strong>Future Extensions:</strong> Add weather data (wind speed, temperature), compare ISRO vs. SpaceX reliability, deploy live Streamlit app with v2.0 constraints.</p>
+            </div>
+        </div>
+
+        <!-- Project Navigation -->
+        <div class="notebook-section">
+            <h3>📑 Project Structure</h3>
+            <p>For detailed implementation, review the notebooks in order:</p>
+            <ol class="notebook-list">
+                <li><code>01_data_acquisition.ipynb</code> — Wikipedia scraping with custom HTML parser</li>
+                <li><code>02_data_preprocessing.ipynb</code> — Cleaning, payload summing, mission filtering</li>
+                <li><code>03_eda_analysis.ipynb</code> — Visualizations, correlation analysis, success trends</li>
+                <li><code>04_ml_model.ipynb</code> — Random Forest training, SMOTE, GridSearchCV tuning</li>
+                <li><code>isro_launch_trend_analysis_report.ipynb</code> — Academic report (Module E template)</li>
+            </ol>
+        </div>
+
     </main>
 
     <script>
@@ -73,6 +153,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const starfield = document.getElementById('starfield');
             const numStars = 150;
+
             for (let i = 0; i < numStars; i++) {
                 let star = document.createElement('div');
                 star.className = 'star';
