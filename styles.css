@@ -75,26 +75,18 @@ body::before {
 .social-links {
     margin-bottom: 1.5em;
 }
-
 .social-links a {
     display: inline-block;
     margin: 0 0.85rem;
     transition: transform 0.18s ease;
 }
-
-.social-links a:hover { 
-    transform: scale(1.13);
-}
-
+.social-links a:hover { transform: scale(1.13); }
 .social-links svg {
     width: 32px; height: 32px;
     fill: var(--text-secondary);
     transition: fill 0.21s ease;
 }
-
-.social-links a:hover svg { 
-    fill: var(--accent);
-}
+.social-links a:hover svg { fill: var(--accent); }
 
 /* Projects section */
 .projects-section h2 {
@@ -145,7 +137,8 @@ body::before {
     color: #fff;
     font-family: 'Orbitron', sans-serif;
     background: linear-gradient(90deg, #fff, var(--accent) 85%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .project-card p {
@@ -156,14 +149,15 @@ body::before {
     margin-bottom: 1.25rem;
 }
 
-.project-tags {
+/* Tags (shared class) */
+.tags, .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1.2rem;
 }
 
-.project-tags span {
+.tag, .project-tags span {
     background: rgba(0, 209, 255, 0.13);
     color: var(--accent);
     padding: 0.31rem 0.73rem;
@@ -172,7 +166,29 @@ body::before {
     font-weight: 600;
 }
 
-/* Project buttons */
+/* Buttons */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.78rem 1.55rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: 0.01em;
+    background: linear-gradient(95deg, #00d1ff 70%, #62d8fa 100%);
+    color: var(--dark-bg);
+    box-shadow: 0 5px 22px #00d1ff22;
+    transition: all 0.21s ease;
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.btn:hover {
+    background: #fff;
+    color: var(--accent);
+}
+
+/* Legacy button classes */
 .project-links a, .project-links span {
     text-decoration: none;
     padding: 0.78rem 1.55rem;
@@ -191,11 +207,7 @@ body::before {
     color: var(--dark-bg);
     box-shadow: 0 5px 22px #00d1ff22;
 }
-
-.btn-primary:hover {
-    background: #fff;
-    color: var(--accent);
-}
+.btn-primary:hover { background: #fff; color: var(--accent); }
 
 .btn-disabled {
     background: rgba(50, 70, 100, 0.44);
@@ -204,6 +216,33 @@ body::before {
     pointer-events: none;
 }
 
+/* Status labels */
+.status-label {
+    font-weight: bold;
+    margin-top: 0.75rem;
+    letter-spacing: .01em;
+    text-align: center;
+    font-size: 0.92em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    display: inline-block;
+    align-self: flex-start;
+    color: #fbbf24;
+}
+
+.status-label.live {
+    background: rgba(0, 209, 100, 0.15);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.4);
+}
+
+.status-label.in-dev {
+    background: rgba(251, 191, 36, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+}
+
+/* Legacy status */
 .coming-soon-status {
     color: #fbbf24;
     font-weight: bold;
@@ -223,32 +262,16 @@ footer {
 }
 
 /* Responsive design */
-@media (max-width: 950px) { 
-    .container{ 
-        padding:2rem .5rem; 
-    } 
+@media (max-width: 950px) {
+    .container{ padding:2rem .5rem; }
 }
-
 @media (max-width: 750px) {
-    .container{
-        padding: 1.2rem .12rem;
-    } 
-    .hero h1{
-        font-size:2.1rem;
-    } 
-    .projects-section h2{
-        font-size:1.18rem;
-    } 
+    .container{ padding: 1.2rem .12rem; }
+    .hero h1{ font-size:2.1rem; }
+    .projects-section h2{ font-size:1.18rem; }
 }
-
 @media (max-width: 500px){
-    .project-card{
-        padding:.9em .5em;
-    }
-    .hero h1{ 
-        font-size: 1.3rem;
-    }
-    .projects-section h2{ 
-        font-size: 1rem;
-    }
+    .project-card{ padding:.9em .5em; }
+    .hero h1{ font-size: 1.3rem; }
+    .projects-section h2{ font-size: 1rem; }
 }
