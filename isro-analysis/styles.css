@@ -21,7 +21,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 2overflow-x: hidden;;
+    padding: 2rem;
+    overflow-x: hidden;
 }
 
 /* Animated Starfield Background */
