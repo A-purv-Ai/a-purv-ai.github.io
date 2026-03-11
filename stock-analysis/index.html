@@ -5,96 +5,8 @@
     <title>10-Year Stock Analysis | Apurva Upadhyay</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="10-year stock performance analysis of AAPL, MSFT, MS, and IBM using Normalized Close feature engineering, SQLite, and Tableau dashboards.">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-
-    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-
-    <style>
-        /* Results section styles */
-        .results-section {
-            margin-top: 2.5rem;
-            text-align: left;
-        }
-        .results-section h2 {
-            font-size: 1.15rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-            color: #e2e8f0;
-            letter-spacing: 0.02em;
-        }
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-            margin-bottom: 1.25rem;
-        }
-        .results-table th {
-            background: rgba(255,255,255,0.07);
-            color: #94a3b8;
-            font-weight: 600;
-            padding: 0.55rem 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .results-table td {
-            padding: 0.55rem 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            color: #cbd5e1;
-        }
-        .results-table tr:last-child td { border-bottom: none; }
-        .results-table .highlight { color: #7dd3fc; font-weight: 700; }
-        .results-table .underperform { color: #f87171; }
-        .findings-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1.25rem 0;
-            font-size: 0.88rem;
-            color: #cbd5e1;
-        }
-        .findings-list li {
-            padding: 0.35rem 0;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-        .findings-list li::before {
-            content: '\2022';
-            position: absolute;
-            left: 0;
-            color: #7dd3fc;
-        }
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .chart-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .chart-item img {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .chart-item span {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-align: center;
-        }
-        .divider {
-            border: none;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            margin: 2rem 0;
-        }
-        @media (max-width: 560px) {
-            .chart-grid { grid-template-columns: 1fr; }
-        }
-    </style>
 </head>
 <body>
     <a href="https://a-purv-ai.github.io/" class="portfolio-tab" target="_blank" title="Go to my main portfolio">
@@ -103,114 +15,132 @@
 
     <div class="background-glow"></div>
 
-    <main class="card">
-        <div class="project-icon">&#128200;</div>
-        <h1>10-Year Stock Performance Analysis</h1>
-        <p class="description">
-            An end-to-end data project analysing <strong>10 years of equity performance</strong> (2014&ndash;2024) across <strong>AAPL, MSFT, MS, and IBM</strong>.
-            Covers feature engineering, data pipeline (Yahoo Finance &rarr; SQLite &rarr; Tableau), and audience-specific dashboards.
-            A custom <em>Normalized Close</em> metric enables fair, same-scale comparison across all four tickers.
-        </p>
+    <div class="page-wrapper">
+        <div class="two-col">
 
-        <div class="tech-stack">
-            <span class="badge">Python</span>
-            <span class="badge">Feature Engineering</span>
-            <span class="badge">Data Analysis</span>
-            <span class="badge">SQLite</span>
-            <span class="badge">CRUD</span>
-            <span class="badge">Tableau</span>
-        </div>
+            <!-- LEFT COLUMN: Project info -->
+            <div class="col-left">
+                <div class="project-icon">&#128200;</div>
+                <h1>10-Year Stock Performance Analysis</h1>
+                <p class="description">
+                    An end-to-end data project analysing <strong>10 years of equity performance</strong> (2014&ndash;2024) across <strong>AAPL, MSFT, MS, and IBM</strong>.
+                    Covers feature engineering, data pipeline (Yahoo Finance &rarr; SQLite &rarr; Tableau), and audience-specific dashboards.
+                    A custom <em>Normalized Close</em> metric enables fair, same-scale comparison across all four tickers.
+                </p>
 
-        <div class="cta-row">
-            <a href="https://github.com/A-purv-Ai/stock-analysis" class="cta-btn" target="_blank">View Project on GitHub</a>
-            <a href="https://public.tableau.com/app/profile/apurva.upadhyay/viz/StockPerformanceoveradecade/StoryExecutiveOverview"
-                class="cta-btn tableau" target="_blank">&#128202; View Analysis on Tableau</a>
-        </div>
-
-        <hr class="divider">
-
-        <!-- Results Section -->
-        <div class="results-section">
-            <h2>&#128270; Results &amp; Findings</h2>
-
-            <p style="font-size:0.88rem;color:#94a3b8;margin-bottom:1rem;">
-                Normalised returns rebased to <strong>1.0&times;</strong> at the start of 2014. Final values represent end-of-period multiples on the original investment baseline.
-            </p>
-
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Stock</th>
-                        <th>Final Normalised Return</th>
-                        <th>Note</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="highlight">MSFT</td>
-                        <td class="highlight">15.03&times;</td>
-                        <td>~15&times; its 2014 value</td>
-                    </tr>
-                    <tr>
-                        <td class="highlight">AAPL</td>
-                        <td class="highlight">15.00&times;</td>
-                        <td>~15&times; its 2014 value</td>
-                    </tr>
-                    <tr>
-                        <td>MS</td>
-                        <td>5.77&times;</td>
-                        <td>~5.8&times; its 2014 value</td>
-                    </tr>
-                    <tr>
-                        <td class="underperform">IBM</td>
-                        <td class="underperform">2.12&times;</td>
-                        <td>Clear underperformer</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <ul class="findings-list">
-                <li><strong>AAPL and MSFT are near-tied on raw terminal return</strong> (15.00&times; vs 15.03&times;) &mdash; neither is a clear winner on raw return alone.</li>
-                <li><strong>AAPL&rsquo;s edge is in consistency:</strong> its pre-2020 growth trajectory was smoother, it dominated trading volume throughout the decade (peak annual volumes up to ~60B shares), and showed lower relative drawdowns during the March 2020 COVID crash.</li>
-                <li><strong>MSFT</strong> matched AAPL&rsquo;s terminal return but with higher volatility in specific periods, driven by the Azure cloud re-rating post-2018.</li>
-                <li><strong>IBM</strong> was the clear underperformer at 2.12&times; over 10 years &mdash; barely above inflation, a cautionary data point for long-hold equity selection.</li>
-                <li><strong>March 2020 COVID crash</strong> is visible as a sharp dip across all tickers, with AAPL and MSFT recovering fastest; IBM&rsquo;s recovery was notably slower.</li>
-                <li><strong>AAPL trading volume declined over the period</strong> (from ~60B in 2014 to ~5&ndash;10B by 2024) &mdash; a sign of compounding price appreciation, not declining interest.</li>
-            </ul>
-
-            <!-- Chart Images -->
-            <h2 style="margin-top:1.5rem;">&#128248; Visualizations</h2>
-            <div class="chart-grid">
-                <div class="chart-item">
-                    <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Relative_Performance.png" target="_blank">
-                        <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Relative_Performance.png"
-                             alt="Stocks Relative Performance — Normalised Close (2014–2024)">
-                    </a>
-                    <span>Normalised Close: Relative Performance (2014&ndash;2024)</span>
+                <div class="tech-stack">
+                    <span class="badge">Python</span>
+                    <span class="badge">Feature Engineering</span>
+                    <span class="badge">Data Analysis</span>
+                    <span class="badge">SQLite</span>
+                    <span class="badge">CRUD</span>
+                    <span class="badge">Tableau</span>
                 </div>
-                <div class="chart-item">
-                    <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Executive_Overview_Story.png" target="_blank">
-                        <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Executive_Overview_Story.png"
-                             alt="Executive Overview Dashboard">
-                    </a>
-                    <span>Executive Overview Dashboard</span>
+
+                <div class="cta-row">
+                    <a href="https://github.com/A-purv-Ai/stock-analysis" class="cta-btn" target="_blank">View on GitHub</a>
+                    <a href="https://public.tableau.com/app/profile/apurva.upadhyay/viz/StockPerformanceoveradecade/StoryExecutiveOverview"
+                        class="cta-btn tableau" target="_blank">&#128202; Tableau Dashboard</a>
                 </div>
-                <div class="chart-item">
-                    <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Managerial_Overview_Dashboard.png" target="_blank">
-                        <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Managerial_Overview_Dashboard.png"
-                             alt="Managerial Overview Dashboard">
-                    </a>
-                    <span>Managerial Overview Dashboard</span>
+
+                <div class="about-section">
+                    <h2 class="section-heading">&#128269; Analytical Question</h2>
+                    <p>Traditional stock comparison using raw closing prices is misleading &mdash; stocks trade at very different price scales. This project engineers a <strong>Normalized Close</strong> feature that rebases all stocks to <strong>1.0&times; at the start of 2014</strong>, enabling true like-for-like performance comparison across the full decade.</p>
                 </div>
-                <div class="chart-item">
-                    <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Closing_Price_Trend.png" target="_blank">
-                        <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Closing_Price_Trend.png"
-                             alt="Stocks Daily Closing Price Trend">
-                    </a>
-                    <span>Daily Closing Price Trend</span>
+
+                <div class="about-section">
+                    <h2 class="section-heading">&#9881;&#65039; Tech Stack</h2>
+                    <table class="stack-table">
+                        <tr><td>Data Acquisition</td><td>yfinance (Yahoo Finance)</td></tr>
+                        <tr><td>Data Handling</td><td>Pandas, SQLite3</td></tr>
+                        <tr><td>Feature Engineering</td><td>Normalized Close metric</td></tr>
+                        <tr><td>Visualization</td><td>Tableau</td></tr>
+                        <tr><td>GUI</td><td>CustomTkinter</td></tr>
+                        <tr><td>Environment</td><td>Python 3.11+</td></tr>
+                    </table>
                 </div>
             </div>
+
+            <!-- RIGHT COLUMN: Results + Charts -->
+            <div class="col-right">
+                <h2 class="section-heading">&#128270; Results &amp; Findings</h2>
+                <p class="sub-note">Normalised returns rebased to <strong>1.0&times;</strong> at start of 2014. Final values = end-of-period return multiples.</p>
+
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Final Normalised Return</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="highlight">MSFT</td>
+                            <td class="highlight">15.03&times;</td>
+                            <td>~15&times; its 2014 value</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">AAPL</td>
+                            <td class="highlight">15.00&times;</td>
+                            <td>~15&times; its 2014 value</td>
+                        </tr>
+                        <tr>
+                            <td>MS</td>
+                            <td>5.77&times;</td>
+                            <td>~5.8&times; its 2014 value</td>
+                        </tr>
+                        <tr>
+                            <td class="underperform">IBM</td>
+                            <td class="underperform">2.12&times;</td>
+                            <td>Clear underperformer</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <ul class="findings-list">
+                    <li><strong>AAPL and MSFT are near-tied on raw terminal return</strong> (15.00&times; vs 15.03&times;) &mdash; neither is a clear winner on raw return alone.</li>
+                    <li><strong>AAPL&rsquo;s edge is in consistency:</strong> smoother pre-2020 trajectory, volume dominance (~60B peak annual shares), and lower COVID crash drawdowns.</li>
+                    <li><strong>MSFT</strong> matched AAPL&rsquo;s terminal return with higher volatility in specific periods, driven by Azure cloud re-rating post-2018.</li>
+                    <li><strong>IBM</strong> was the clear underperformer at 2.12&times; &mdash; barely above inflation over 10 years.</li>
+                    <li><strong>March 2020 COVID crash</strong> visible as a sharp dip; AAPL &amp; MSFT recovered fastest, IBM notably slower.</li>
+                    <li><strong>AAPL volume declined</strong> from ~60B (2014) to ~5&ndash;10B (2024) &mdash; a sign of price appreciation, not declining interest.</li>
+                </ul>
+
+                <h2 class="section-heading" style="margin-top:1.5rem;">&#128248; Visualizations</h2>
+                <div class="chart-grid">
+                    <div class="chart-item">
+                        <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Relative_Performance.png" target="_blank">
+                            <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Relative_Performance.png"
+                                 alt="Normalised Close: Relative Performance 2014&#x2013;2024" loading="lazy">
+                        </a>
+                        <span>Normalised Close: Relative Performance</span>
+                    </div>
+                    <div class="chart-item">
+                        <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Executive_Overview_Story.png" target="_blank">
+                            <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Executive_Overview_Story.png"
+                                 alt="Executive Overview Dashboard" loading="lazy">
+                        </a>
+                        <span>Executive Overview Dashboard</span>
+                    </div>
+                    <div class="chart-item">
+                        <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Managerial_Overview_Dashboard.png" target="_blank">
+                            <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Managerial_Overview_Dashboard.png"
+                                 alt="Managerial Overview Dashboard" loading="lazy">
+                        </a>
+                        <span>Managerial Overview Dashboard</span>
+                    </div>
+                    <div class="chart-item">
+                        <a href="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Closing_Price_Trend.png" target="_blank">
+                            <img src="https://raw.githubusercontent.com/A-purv-Ai/stock-analysis/main/images/Stocks_Closing_Price_Trend.png"
+                                 alt="Daily Closing Price Trend" loading="lazy">
+                        </a>
+                        <span>Daily Closing Price Trend</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </main>
+    </div>
 </body>
 </html>
