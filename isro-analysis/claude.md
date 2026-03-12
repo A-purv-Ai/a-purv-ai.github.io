@@ -384,11 +384,12 @@ Uses "best ratio" logic: among all intersecting sections, picks the one with the
 
 1. **`milkyway-bg.jpg` must be in the same directory as `styles.css`** — the `url('milkyway-bg.jpg')` is a relative path.
 2. **The `<html>` and `<body>` tags are unconventional** — `<head>` closes on line 13, then body content starts immediately. No explicit `<body>` open tag.
-3. **Splash screen removal is DOM-destructive** — `splash.remove()` fully removes `#intro-splash` from the DOM after fade. Do not rely on its existence after launch.
+3. **Splash screen removal is DOM-destructive** — `splash.remove()` fully removes `#intro-splash` from the DOM after `4.2s` (extended from `3.7s`). Do not rely on its existence after launch.
 4. **`body.intro-complete` class gates content visibility** — `body:not(.intro-complete) .mission-control` has `opacity: 0`. Content is invisible until this class is added.
 5. **Panel animations run exactly once** — `animatedPanels` Set prevents re-running them if you scroll back up and then down again.
 6. **LVM3 differs from GSLV/PSLV** — it has an extra `.rb-stripe.mid` inside `.rb3d` AND 4 smoke-puffs (not 3).
 7. **Nozzle flush math** — body ends at `top: 144px` in a `170px` container = `26px` from bottom. Nozzle `height: 14px` at `bottom: 12px` = nozzle top at `26px` = exactly flush. Don't blindly change these values.
+8. **Progressive Background Nuances** — The `body` element must have `background-color: transparent`. A solid color here will hide the instant `blur(20px)` placeholder mapped to `body::before` at `z-index: -3`. The high-res image `div.bg-hi-res` fades in at `z-index: -2` over `3s`.
 
 ---
 
