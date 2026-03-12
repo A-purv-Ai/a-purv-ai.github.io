@@ -9,9 +9,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="milkyway-bg.jpg">
+    <!-- Progressive Image Loading: Preload tiny blurred placeholder -->
+    <link rel="preload" as="image" href="milkyway-bg-tiny.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
+    <!-- Background layer for full resolution fade-in -->
+    <div class="bg-hi-res" id="hiResBg"></div>
     <div id="starfield"></div>
 
     <!-- ═══════════ INTRO SPLASH — 3 Launch Vehicles ═══════════ -->
@@ -553,7 +556,7 @@
                     splash.style.opacity = '0';
                     setTimeout(() => splash.remove(), 800);
                     document.body.classList.add('intro-complete');
-                }, 3700); // 3.7s = 3.5s animation + small buffer
+                }, 4200); // Increased to 4.2s to give the bg image more time to load and fade in smoothly
             });
         }
 
@@ -737,6 +740,14 @@
                 }
             }
             requestAnimationFrame(update);
+        }
+
+        // ── Progressive Background Fade-In ──────────────────
+        const hiResBg = document.getElementById('hiResBg');
+        if (hiResBg) {
+            const bgImg = new Image();
+            bgImg.src = 'milkyway-bg.jpg';
+            bgImg.onload = () => hiResBg.classList.add('loaded');
         }
 
     });
