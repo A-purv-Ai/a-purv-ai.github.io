@@ -4,17 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISRO Launch Success Prediction | Apurva Upadhyay</title>
+    <meta name="description" content="Data-driven launch risk assessment for India's space program — ML-powered mission success prediction using Random Forest and SMOTE.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Main Stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
     <div id="starfield"></div>
+
+    <!-- ═══════════ INTRO SPLASH — 3 Launch Vehicles ═══════════ -->
+    <div id="intro-splash">
+
+        <!-- GSLV — Left (medium) -->
+        <div class="intro-rocket-3d r-left">
+            <div class="rocket-label">GSLV</div>
+            <div class="rocket-3d">
+                <div class="nc3d"></div>
+                <div class="rb3d">
+                    <div class="rb-stripe top"></div>
+                    <div class="rb-logo">ISRO</div>
+                    <div class="rb-type">GSLV</div>
+                    <div class="rb-window"></div>
+                    <div class="rb-stripe bot"></div>
+                </div>
+                <div class="rf3d left"></div>
+                <div class="rf3d right"></div>
+                <div class="engine-nozzle"></div>
+                <div class="exhaust-group">
+                    <div class="exhaust-glow"></div>
+                    <div class="exhaust-outer"></div>
+                    <div class="exhaust-core"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LVM3 — Center (biggest, launches first) -->
+        <div class="intro-rocket-3d r-center">
+            <div class="rocket-label">LVM3</div>
+            <div class="rocket-3d">
+                <div class="nc3d"></div>
+                <div class="rb3d">
+                    <div class="rb-stripe top"></div>
+                    <div class="rb-logo">ISRO</div>
+                    <div class="rb-type">LVM3</div>
+                    <div class="rb-window"></div>
+                    <div class="rb-stripe mid"></div>
+                    <div class="rb-stripe bot"></div>
+                </div>
+                <div class="rf3d left"></div>
+                <div class="rf3d right"></div>
+                <div class="engine-nozzle"></div>
+                <div class="exhaust-group">
+                    <div class="exhaust-glow"></div>
+                    <div class="exhaust-outer"></div>
+                    <div class="exhaust-core"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PSLV — Right (smallest) -->
+        <div class="intro-rocket-3d r-right">
+            <div class="rocket-label">PSLV</div>
+            <div class="rocket-3d">
+                <div class="nc3d"></div>
+                <div class="rb3d">
+                    <div class="rb-stripe top"></div>
+                    <div class="rb-logo">ISRO</div>
+                    <div class="rb-type">PSLV</div>
+                    <div class="rb-window"></div>
+                    <div class="rb-stripe bot"></div>
+                </div>
+                <div class="rf3d left"></div>
+                <div class="rf3d right"></div>
+                <div class="engine-nozzle"></div>
+                <div class="exhaust-group">
+                    <div class="exhaust-glow"></div>
+                    <div class="exhaust-outer"></div>
+                    <div class="exhaust-core"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                    <div class="smoke-puff"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="launch-btn" id="launchBtn">Launch</button>
+
+    </div>
 
     <a href="https://a-purv-ai.github.io" class="portfolio-tab" target="_blank">
         <span>🌌</span> My Portfolio
@@ -23,9 +107,7 @@
     <div class="rocket-container">
         <div class="rocket">
             <div class="nose-cone"></div>
-            <div class="body">
-                <div class="window"></div>
-            </div>
+            <div class="body"><div class="window"></div></div>
             <div class="fin fin-left"></div>
             <div class="fin fin-right"></div>
             <div class="flame-container">
@@ -37,42 +119,43 @@
         <div class="smoke-trail"></div>
     </div>
 
-    <main class="card">
-        <div class="version-badge">
-            <span class="badge-v1">v1.0</span>
-            <span class="badge-text">Capstone Project — IIT Ropar, Major in AI</span>
-        </div>
+    <!-- ═══════════ MISSION CONTROL: TWO-COLUMN LAYOUT ═══════════ -->
+    <div class="mission-control">
 
-        <h1>ISRO Launch Success Prediction</h1>
-        <p class="subtitle">Data-driven launch risk assessment for India's space program — helping commercial operators make informed mission decisions</p>
+        <!-- ─── LEFT: Narrative Column ─── -->
+        <main class="narrative-column">
 
-        <!-- Problem / Motivation -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>🎯 Problem / Motivation</h3>
+            <header class="page-header">
+                <div class="version-badge">
+                    <span class="badge-v1">v1.0</span>
+                    <span class="badge-text">Capstone Project — IIT Ropar, Major in AI</span>
+                </div>
+                <h1>ISRO Launch Success Prediction</h1>
+                <p class="subtitle">Data-driven launch risk assessment for India's space program — helping commercial operators make informed mission decisions</p>
+            </header>
+
+            <!-- Section 1: Problem / Motivation -->
+            <section class="narrative-section" data-panel="problem">
+                <h3><span class="section-icon">🎯</span> Problem / Motivation</h3>
                 <p><strong>The Challenge:</strong> Commercial satellite operators face enormous costs (crores per mission) with limited ways to assess risk beyond broad historical success rates.</p>
                 <p><strong>Why It Matters:</strong> Recent anomalies — PSLV-C61 (May 2025) and PSLV-C62 (Jan 2026) — showed that traditional "90% success rate" metrics fail to capture mission-specific risks based on payload weight, orbit type, and vehicle configuration.</p>
                 <p><strong>Business Impact:</strong> Insurance companies and commercial operators need granular, feature-driven probability scores to make data-backed decisions about mission budgeting and risk management.</p>
-            </div>
-        </div>
+            </section>
 
-        <!-- Approach -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>🛠️ Approach</h3>
+            <!-- Section 2: Approach -->
+            <section class="narrative-section" data-panel="approach">
+                <h3><span class="section-icon">🛠️</span> Approach</h3>
                 <p><strong>Data Collection:</strong> Scraped Wikipedia launch tables for PSLV, GSLV, LVM3 missions. Built custom parser to handle multi-satellite missions and complex HTML rowspan structures.</p>
                 <p><strong>Data Cleaning:</strong> Forward-fill technique for sub-satellite rows, regex-based payload mass extraction and summing, filtering to completed missions only (Success/Failure/Partial).</p>
                 <p><strong>Feature Engineering:</strong> Created categorical features: Vehicle Family, Orbit Type, Launch Site. Numerical: Total Payload Mass (kg). Mapped Partial Failures → Failure for strict binary classification.</p>
                 <p><strong>Class Balancing:</strong> Applied SMOTE (Synthetic Minority Over-sampling) to address 8:1 success-to-failure imbalance and prevent model bias toward "always predict success."</p>
                 <p><strong>Model Training:</strong> Random Forest Classifier with GridSearchCV (5-fold CV) for hyperparameter tuning. Optimized for recall on failure class to minimize false negatives in risk assessment.</p>
                 <p><strong>Validation:</strong> Included most recent data through Jan 2026 (PSLV-C62) to ensure model reflects current hardware state.</p>
-            </div>
-        </div>
+            </section>
 
-        <!-- Tools & Technologies -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>💻 Tools & Technologies</h3>
+            <!-- Section 3: Tools & Technologies -->
+            <section class="narrative-section" data-panel="tools">
+                <h3><span class="section-icon">💻</span> Tools & Technologies</h3>
                 <ul class="tech-list">
                     <li><strong>Python</strong> — Core language for all data processing and ML</li>
                     <li><strong>BeautifulSoup</strong> — Web scraping Wikipedia launch tables</li>
@@ -82,49 +165,43 @@
                     <li><strong>Streamlit</strong> — Interactive prediction interface (demo)</li>
                     <li><strong>Jupyter Notebooks</strong> — Exploratory analysis and documentation</li>
                 </ul>
-            </div>
-        </div>
+            </section>
 
-        <!-- Key Insights / Results -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>💡 Key Insights / Results</h3>
+            <!-- Section 4: Key Insights / Results -->
+            <section class="narrative-section" data-panel="results">
+                <h3><span class="section-icon">💡</span> Key Insights / Results</h3>
                 <div class="insight-box">
                     <p><strong>1. Feature Importance:</strong> Vehicle Family and Payload Mass are dominant predictors. GTO missions with heavy payloads show distinct risk profiles vs. LEO missions.</p>
                     <p><strong>2. Model Performance:</strong> Random Forest achieved 85%+ test accuracy with balanced recall/precision. SMOTE successfully prevented "always success" predictions.</p>
                     <p><strong>3. Real-World Validation:</strong> Model correctly flagged higher risk for PSLV-C62 mission profile (Jan 2026 anomaly), demonstrating practical applicability.</p>
                     <p><strong>4. Actionable Output:</strong> Instead of binary predictions, model outputs probability scores (e.g., "78% success chance") for nuanced risk assessment.</p>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Visuals / Demo -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>📊 Visuals / Demo</h3>
+            <!-- Section 5: Visuals / Demo -->
+            <section class="narrative-section" data-panel="demo">
+                <h3><span class="section-icon">📊</span> Visuals / Demo</h3>
                 <p><strong>Feature Importance Chart:</strong> See <code>Output/figures/feature_importance.png</code> in repo showing Vehicle Family (42%) and Payload Mass (31%) as top predictors.</p>
                 <p><strong>Notebooks:</strong> Full EDA with correlation heatmaps, success rate trends, and mission frequency analysis in <code>Notebooks/03_eda_analysis.ipynb</code></p>
                 <p><strong>Interactive Demo:</strong> Streamlit app planned for v1.1 — input mission parameters and get real-time success probability.</p>
                 <div class="link-buttons">
                     <a href="https://github.com/A-purv-Ai/isro-analysis" target="_blank" class="btn-github">👁️ View Full Project on GitHub</a>
                     <a href="https://github.com/A-purv-Ai/isro-analysis/blob/main/README.md" target="_blank" class="btn-readme">Read Detailed README</a>
-                                        <a href="https://docs.google.com/presentation/d/1lLUHOhOrWRVurLETg-D3nkYkDgNVBUIdCP-bEMWJIPE/" target="_blank" class="btn-readme">📊 View Presentation</a>
+                    <a href="https://docs.google.com/presentation/d/1lLUHOhOrWRVurLETg-D3nkYkDgNVBUIdCP-bEMWJIPE/" target="_blank" class="btn-readme">📊 View Presentation</a>
                     <a href="https://drive.google.com/file/d/1pCbkusrP7aP5FqsNZcxEj9tQdYB3m_u_/" target="_blank" class="btn-readme">🎥 Watch Demo Video</a>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Reflection / Next Steps -->
-        <div class="methods-grid">
-            <div class="method-item">
-                <h3>🔮 Reflection / Next Steps</h3>
+            <!-- Section 6: Reflection / Next Steps -->
+            <section class="narrative-section" data-panel="roadmap">
+                <h3><span class="section-icon">🔮</span> Reflection / Next Steps</h3>
                 <p><strong>What I Learned:</strong> Scraped messy real-world data, handled severe class imbalance, understood domain constraints matter for ML interpretability.</p>
                 <div class="roadmap-box">
                     <h4>🚀 Roadmap to v2.0: Physics-Aware Constraints</h4>
                     <p><strong>Current Limitation:</strong> v1.0 predicts success probability for ANY input — even physically impossible missions (e.g., 10-ton payload on PSLV to GTO).</p>
                     <p><strong>Planned Enhancement:</strong> Integrate rocket-specific payload capacity curves:</p>
                     <ul>
-                        <li>PSLV payload limits by orbit (LEO: 3.8T, SSO: 1.75T, GTO: 1.4T)</li>
+                        <li>PSLV payload limits by orbit</li>
                         <li>GSLV Mk II/Mk III performance envelopes</li>
                         <li>LVM3 configuration-specific constraints</li>
                     </ul>
@@ -132,41 +209,536 @@
                     <p><strong>Impact:</strong> Moves model from "probability predictor" to "mission advisor" — realistic for commercial operators planning actual launches.</p>
                 </div>
                 <p><strong>Future Extensions:</strong> Add weather data (wind speed, temperature), compare ISRO vs. SpaceX reliability, deploy live Streamlit app with v2.0 constraints.</p>
+            </section>
+
+            <!-- Project Navigation -->
+            <div class="notebook-section">
+                <h3>📑 Project Structure</h3>
+                <p>For detailed implementation, review the notebooks in order:</p>
+                <ol class="notebook-list">
+                    <li><code>01_data_acquisition.ipynb</code> — Wikipedia scraping with custom HTML parser</li>
+                    <li><code>02_data_preprocessing.ipynb</code> — Cleaning, payload summing, mission filtering</li>
+                    <li><code>03_eda_analysis.ipynb</code> — Visualizations, correlation analysis, success trends</li>
+                    <li><code>04_ml_model.ipynb</code> — Random Forest training, SMOTE, GridSearchCV tuning</li>
+                    <li><code>isro_launch_trend_analysis_report.ipynb</code> — Academic report (as per project guidelines)</li>
+                </ol>
             </div>
-        </div>
 
-        <!-- Project Navigation -->
-        <div class="notebook-section">
-            <h3>📑 Project Structure</h3>
-            <p>For detailed implementation, review the notebooks in order:</p>
-            <ol class="notebook-list">
-                <li><code>01_data_acquisition.ipynb</code> — Wikipedia scraping with custom HTML parser</li>
-                <li><code>02_data_preprocessing.ipynb</code> — Cleaning, payload summing, mission filtering</li>
-                <li><code>03_eda_analysis.ipynb</code> — Visualizations, correlation analysis, success trends</li>
-                <li><code>04_ml_model.ipynb</code> — Random Forest training, SMOTE, GridSearchCV tuning</li>
-                <li><code>isro_launch_trend_analysis_report.ipynb</code> — Academic report (as per project guidelines)</li>
-            </ol>
-        </div>
+        </main>
 
-    </main>
+        <!-- ─── RIGHT: Dashboard Panel (sticky) ─── -->
+        <aside class="dashboard-panel">
 
+            <!-- Panel 1: Mission Timeline -->
+            <div class="panel active" data-for="problem">
+                <div class="panel-title">Mission Timeline</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-year">1993</div>
+                        <div class="timeline-label">PSLV-D1</div>
+                        <div class="timeline-detail">First developmental flight</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-year">2008</div>
+                        <div class="timeline-label">Chandrayaan-1</div>
+                        <div class="timeline-detail">India's first lunar mission</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-year">2013</div>
+                        <div class="timeline-label">Mars Orbiter</div>
+                        <div class="timeline-detail">First Asian Mars success</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot failure"></div>
+                        <div class="timeline-year">2017</div>
+                        <div class="timeline-label">GSLV-F09</div>
+                        <div class="timeline-detail">Payload fairing failure</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-year">2019</div>
+                        <div class="timeline-label">Chandrayaan-2</div>
+                        <div class="timeline-detail">Orbiter still operational</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-label">Chandrayaan-3</div>
+                        <div class="timeline-detail">Successful lunar landing</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot failure"></div>
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-label">PSLV-C61</div>
+                        <div class="timeline-detail">Anomaly — recent failure</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot failure"></div>
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-label">PSLV-C62</div>
+                        <div class="timeline-detail">Anomaly — latest mission</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Pipeline Flow -->
+            <div class="panel" data-for="approach">
+                <div class="panel-title">ML Pipeline</div>
+                <div class="pipeline">
+                    <div class="pipe-step">
+                        <div class="pipe-icon">🌐</div>
+                        <div><div class="pipe-text">Data Scraping</div><div class="pipe-sub">Wikipedia launch tables</div></div>
+                    </div>
+                    <div class="pipe-connector"><svg viewBox="0 0 20 18"><polyline points="10,2 10,16" stroke-dasharray="3,3"/><polyline points="6,12 10,16 14,12"/></svg></div>
+                    <div class="pipe-step">
+                        <div class="pipe-icon">🧹</div>
+                        <div><div class="pipe-text">Data Cleaning</div><div class="pipe-sub">Forward-fill, regex parsing</div></div>
+                    </div>
+                    <div class="pipe-connector"><svg viewBox="0 0 20 18"><polyline points="10,2 10,16" stroke-dasharray="3,3"/><polyline points="6,12 10,16 14,12"/></svg></div>
+                    <div class="pipe-step">
+                        <div class="pipe-icon">⚙️</div>
+                        <div><div class="pipe-text">Feature Engineering</div><div class="pipe-sub">Vehicle, orbit, payload features</div></div>
+                    </div>
+                    <div class="pipe-connector"><svg viewBox="0 0 20 18"><polyline points="10,2 10,16" stroke-dasharray="3,3"/><polyline points="6,12 10,16 14,12"/></svg></div>
+                    <div class="pipe-step">
+                        <div class="pipe-icon">⚖️</div>
+                        <div><div class="pipe-text">SMOTE Balancing</div><div class="pipe-sub">8:1 → balanced classes</div></div>
+                    </div>
+                    <div class="pipe-connector"><svg viewBox="0 0 20 18"><polyline points="10,2 10,16" stroke-dasharray="3,3"/><polyline points="6,12 10,16 14,12"/></svg></div>
+                    <div class="pipe-step">
+                        <div class="pipe-icon">🧠</div>
+                        <div><div class="pipe-text">Model Training</div><div class="pipe-sub">Random Forest + GridSearchCV</div></div>
+                    </div>
+                    <div class="pipe-connector"><svg viewBox="0 0 20 18"><polyline points="10,2 10,16" stroke-dasharray="3,3"/><polyline points="6,12 10,16 14,12"/></svg></div>
+                    <div class="pipe-step" style="border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.06);">
+                        <div class="pipe-icon">🎯</div>
+                        <div><div class="pipe-text">Prediction</div><div class="pipe-sub">Probability scores output</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Tech Stack Grid -->
+            <div class="panel" data-for="tools">
+                <div class="panel-title">Tech Stack</div>
+                <div class="tech-grid">
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(55,118,171,0.2); color: #3776AB;">🐍</div>
+                        <div><div class="tech-badge-name">Python</div><div class="tech-badge-role">Core Language</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(67,160,71,0.2); color: #43A047;">🍲</div>
+                        <div><div class="tech-badge-name">BeautifulSoup</div><div class="tech-badge-role">Web Scraping</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(21,101,192,0.2); color: #1565C0;">📊</div>
+                        <div><div class="tech-badge-name">Pandas</div><div class="tech-badge-role">Data Wrangling</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(76,137,185,0.2); color: #4C89B9;">🔢</div>
+                        <div><div class="tech-badge-name">NumPy</div><div class="tech-badge-role">Numerical Ops</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(245,130,48,0.2); color: #F58230;">🤖</div>
+                        <div><div class="tech-badge-name">scikit-learn</div><div class="tech-badge-role">ML Framework</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(30,136,229,0.2); color: #1E88E5;">📈</div>
+                        <div><div class="tech-badge-name">Matplotlib</div><div class="tech-badge-role">Visualizations</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(77,166,166,0.2); color: #4DA6A6;">🎨</div>
+                        <div><div class="tech-badge-name">Seaborn</div><div class="tech-badge-role">Statistical Plots</div></div>
+                    </div>
+                    <div class="tech-badge">
+                        <div class="tech-badge-icon" style="background: rgba(255,75,75,0.2); color: #FF4B4B;">🚀</div>
+                        <div><div class="tech-badge-name">Streamlit</div><div class="tech-badge-role">Demo Interface</div></div>
+                    </div>
+                    <div class="tech-badge" style="grid-column: 1 / -1;">
+                        <div class="tech-badge-icon" style="background: rgba(244,114,39,0.2); color: #F47227;">📓</div>
+                        <div><div class="tech-badge-name">Jupyter Notebooks</div><div class="tech-badge-role">Exploratory Analysis & Documentation</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4: Results — Stats & Charts -->
+            <div class="panel" data-for="results">
+                <div class="panel-title">Model Performance</div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-ring" style="--pct: 0%;">
+                            <span class="stat-value" data-target="85">0</span><span class="stat-value" style="font-size:0.9rem;">%</span>
+                        </div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-ring" style="--pct: 0%;">
+                            <span class="stat-value" data-target="5">0</span><span class="stat-value" style="font-size:0.9rem;">-fold</span>
+                        </div>
+                        <div class="stat-label">Cross Val</div>
+                    </div>
+                </div>
+
+                <div class="feature-bars">
+                    <div class="feature-bar">
+                        <div class="feature-bar-head">
+                            <span class="feature-bar-name">Vehicle Family</span>
+                            <span class="feature-bar-pct">42%</span>
+                        </div>
+                        <div class="feature-bar-track"><div class="feature-bar-fill" data-width="42%"></div></div>
+                    </div>
+                    <div class="feature-bar">
+                        <div class="feature-bar-head">
+                            <span class="feature-bar-name">Payload Mass</span>
+                            <span class="feature-bar-pct">31%</span>
+                        </div>
+                        <div class="feature-bar-track"><div class="feature-bar-fill" data-width="31%"></div></div>
+                    </div>
+                    <div class="feature-bar">
+                        <div class="feature-bar-head">
+                            <span class="feature-bar-name">Orbit Type</span>
+                            <span class="feature-bar-pct">16%</span>
+                        </div>
+                        <div class="feature-bar-track"><div class="feature-bar-fill" data-width="16%"></div></div>
+                    </div>
+                    <div class="feature-bar">
+                        <div class="feature-bar-head">
+                            <span class="feature-bar-name">Launch Site</span>
+                            <span class="feature-bar-pct">11%</span>
+                        </div>
+                        <div class="feature-bar-track"><div class="feature-bar-fill" data-width="11%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 5: Demo — Prediction Example -->
+            <div class="panel" data-for="demo">
+                <div class="panel-title">Prediction Example</div>
+
+                <div class="prediction-example">
+                    <div class="pred-header">Sample Mission Input</div>
+                    <div class="pred-params">
+                        <div class="pred-param">
+                            <div class="pred-param-label">Vehicle</div>
+                            <div class="pred-param-value">PSLV</div>
+                        </div>
+                        <div class="pred-param">
+                            <div class="pred-param-label">Orbit</div>
+                            <div class="pred-param-value">SSO</div>
+                        </div>
+                        <div class="pred-param">
+                            <div class="pred-param-label">Payload</div>
+                            <div class="pred-param-value">1,200 kg</div>
+                        </div>
+                        <div class="pred-param">
+                            <div class="pred-param-label">Site</div>
+                            <div class="pred-param-value">SDSC</div>
+                        </div>
+                    </div>
+                    <div class="pred-result">
+                        <div class="pred-result-label">Predicted Success Probability</div>
+                        <div class="pred-result-value" data-target="91">0%</div>
+                        <div class="pred-result-note">Random Forest Classifier Output</div>
+                    </div>
+                </div>
+
+                <div class="mini-chart">
+                    <div class="mini-chart-title">Success Rate by Vehicle</div>
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">PSLV</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill green" data-width="92%"></div></div>
+                        <div class="mini-bar-pct">92%</div>
+                    </div>
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">GSLV</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill amber" data-width="60%"></div></div>
+                        <div class="mini-bar-pct">60%</div>
+                    </div>
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">LVM3</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill green" data-width="100%"></div></div>
+                        <div class="mini-bar-pct">100%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 6: Roadmap v1→v2 -->
+            <div class="panel" data-for="roadmap">
+                <div class="panel-title">Development Roadmap</div>
+
+                <div class="roadmap-version-label v1-label">v1.0 — Current</div>
+                <div class="roadmap-progress">
+                    <div class="roadmap-step completed">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="check">✓</span> Data Pipeline</div>
+                        <div class="roadmap-step-desc">Wikipedia scraping + cleaning</div>
+                    </div>
+                    <div class="roadmap-step completed">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="check">✓</span> ML Model</div>
+                        <div class="roadmap-step-desc">Random Forest + SMOTE + 85% accuracy</div>
+                    </div>
+                    <div class="roadmap-step completed">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="check">✓</span> EDA & Insights</div>
+                        <div class="roadmap-step-desc">Feature importance, success trends</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-version-label v2-label">v2.0 — Planned</div>
+                <div class="roadmap-progress">
+                    <div class="roadmap-step planned">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="pending">◯</span> Physics Constraints</div>
+                        <div class="roadmap-step-desc">Payload capacity validation layer</div>
+                    </div>
+                    <div class="roadmap-step planned">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="pending">◯</span> Streamlit App</div>
+                        <div class="roadmap-step-desc">Interactive prediction interface</div>
+                    </div>
+                    <div class="roadmap-step planned">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="pending">◯</span> Weather Data</div>
+                        <div class="roadmap-step-desc">Wind speed, temperature factors</div>
+                    </div>
+                    <div class="roadmap-step planned">
+                        <div class="roadmap-step-dot"></div>
+                        <div class="roadmap-step-title"><span class="pending">◯</span> ISRO vs SpaceX</div>
+                        <div class="roadmap-step-desc">Cross-agency reliability comparison</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- ═══════════ SCRIPTS ═══════════ -->
     <script>
-        // Starfield generation script
-        document.addEventListener('DOMContentLoaded', function () {
-            const starfield = document.getElementById('starfield');
-            const numStars = 150;
+    document.addEventListener('DOMContentLoaded', function () {
 
-            for (let i = 0; i < numStars; i++) {
-                let star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                star.style.animationDuration = `${Math.random() * 3 + 4}s`;
-                starfield.appendChild(star);
+        // ── Always start from top on load/refresh ────────────
+        window.scrollTo(0, 0);
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+        // ── Fullscreen on Portfolio Link Click ───────────────
+        const portfolioTab = document.querySelector('.portfolio-tab');
+        if (portfolioTab) {
+            portfolioTab.addEventListener('click', function() {
+                const el = document.documentElement;
+                if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+            });
+        }
+
+        // ── Intro Launch Button ────────────────────────────
+        const launchBtn = document.getElementById('launchBtn');
+        const splash = document.getElementById('intro-splash');
+
+        if (launchBtn && splash) {
+            launchBtn.addEventListener('click', function() {
+                // Request fullscreen for immersive experience
+                const el = document.documentElement;
+                if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+
+                // Ignite!
+                splash.classList.add('launching');
+
+                // After rockets clear screen, fade out splash and reveal content
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 800);
+                    document.body.classList.add('intro-complete');
+                }, 3700); // 3.7s = 3.5s animation + small buffer
+            });
+        }
+
+        // ── Starfield ───────────────────────────────────────
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${Math.random() * 3 + 4}s`;
+            starfield.appendChild(star);
+        }
+
+        // ── Entrance Animations (left sections) ────────────
+        const sections = document.querySelectorAll('.narrative-section, .notebook-section');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    // Stagger the animation slightly based on order
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        sections.forEach(s => sectionObserver.observe(s));
+
+        // ── Dashboard Panel Switching ───────────────────────
+        const narrativeSections = document.querySelectorAll('.narrative-section[data-panel]');
+        const panels = document.querySelectorAll('.panel[data-for]');
+        let activePanel = 'problem';
+
+        function switchPanel(panelName) {
+            if (panelName === activePanel) return;
+            activePanel = panelName;
+
+            panels.forEach(p => {
+                if (p.dataset.for === panelName) {
+                    p.classList.add('active');
+                    // Trigger panel-specific animations
+                    animatePanel(p, panelName);
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+        }
+
+        const panelObserver = new IntersectionObserver((entries) => {
+            // Find the most visible section
+            let best = null;
+            let bestRatio = 0;
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+                    bestRatio = entry.intersectionRatio;
+                    best = entry.target;
+                }
+            });
+            if (best) {
+                switchPanel(best.dataset.panel);
             }
-        });
+        }, { threshold: [0.2, 0.4, 0.6], rootMargin: '-80px 0px -30% 0px' });
+
+        narrativeSections.forEach(s => panelObserver.observe(s));
+
+        // Initial panel animation
+        setTimeout(() => animatePanel(document.querySelector('.panel[data-for="problem"]'), 'problem'), 400);
+
+        // ── Panel-Specific Animations ───────────────────────
+        const animatedPanels = new Set();
+
+        function animatePanel(panel, name) {
+            if (!panel || animatedPanels.has(name)) return;
+            animatedPanels.add(name);
+
+            switch (name) {
+                case 'problem':
+                    animateTimeline(panel);
+                    break;
+                case 'approach':
+                    animatePipeline(panel);
+                    break;
+                case 'tools':
+                    animateTechGrid(panel);
+                    break;
+                case 'results':
+                    animateResults(panel);
+                    break;
+                case 'demo':
+                    animateDemo(panel);
+                    break;
+                case 'roadmap':
+                    animateRoadmap(panel);
+                    break;
+            }
+        }
+
+        function animateTimeline(panel) {
+            const items = panel.querySelectorAll('.timeline-item');
+            items.forEach((item, i) => {
+                setTimeout(() => item.classList.add('animate-in'), i * 120);
+            });
+        }
+
+        function animatePipeline(panel) {
+            const steps = panel.querySelectorAll('.pipe-step');
+            steps.forEach((step, i) => {
+                setTimeout(() => step.classList.add('animate-in'), i * 140);
+            });
+        }
+
+        function animateTechGrid(panel) {
+            const badges = panel.querySelectorAll('.tech-badge');
+            badges.forEach((badge, i) => {
+                setTimeout(() => badge.classList.add('animate-in'), i * 90);
+            });
+        }
+
+        function animateResults(panel) {
+            // Animate stat rings
+            const rings = panel.querySelectorAll('.stat-ring');
+            rings.forEach(ring => {
+                const valEl = ring.querySelector('.stat-value[data-target]');
+                if (valEl) {
+                    const target = parseInt(valEl.dataset.target);
+                    ring.style.setProperty('--pct', target + '%');
+                    countUp(valEl, target, 1200);
+                }
+            });
+
+            // Animate feature bars
+            setTimeout(() => {
+                panel.querySelectorAll('.feature-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
+                });
+            }, 400);
+        }
+
+        function animateDemo(panel) {
+            // Animate prediction value
+            const predVal = panel.querySelector('.pred-result-value[data-target]');
+            if (predVal) {
+                const target = parseInt(predVal.dataset.target);
+                countUp(predVal, target, 1000, '%');
+            }
+
+            // Animate mini chart bars
+            setTimeout(() => {
+                panel.querySelectorAll('.mini-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
+                });
+            }, 500);
+        }
+
+        function animateRoadmap(panel) {
+            const steps = panel.querySelectorAll('.roadmap-step');
+            steps.forEach((step, i) => {
+                setTimeout(() => step.classList.add('animate-in'), i * 150);
+            });
+        }
+
+        // ── Count-Up Utility ────────────────────────────────
+        function countUp(el, target, duration, suffix = '') {
+            const start = 0;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease-out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(start + (target - start) * eased);
+                el.textContent = current + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+    });
     </script>
 </body>
 </html>

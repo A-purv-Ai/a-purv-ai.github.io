@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL 3D Rocket Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a1628;
+            overflow: hidden;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Milky Way background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url('milkyway-bg.jpg') center center / cover no-repeat;
+            z-index: -2;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 22, 40, 0.3) 0%,
+                rgba(10, 22, 40, 0.15) 50%,
+                rgba(10, 22, 40, 0.4) 100%
+            );
+            z-index: -1;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .label {
+            position: fixed;
+            top: 24px; left: 50%;
+            transform: translateX(-50%);
+            color: #00d1ff;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            z-index: 100;
+            text-shadow: 0 0 20px rgba(0,209,255,0.5);
+        }
+        .label small {
+            display: block;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex; gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            background: rgba(0,209,255,0.15);
+            border: 1px solid rgba(0,209,255,0.4);
+            color: #00d1ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(8px);
+        }
+        .btn:hover {
+            background: #00d1ff;
+            color: #0a1628;
+        }
+    </style>
+</head>
+<body>
+    <div class="label">
+        WEBGL 3D ROCKET
+        <small>Three.js — real-time 3D rendering</small>
+    </div>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <div class="controls">
+        <button class="btn" id="launchBtn">LAUNCH / RESET</button>
+    </div>
+
+    <!-- Three.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+    (function() {
+        const canvas = document.getElementById('webgl-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(3, 2, 8);
+        camera.lookAt(0, 1, 0);
+
+        // ── Lighting ──
+        const ambientLight = new THREE.AmbientLight(0x334466, 0.5);
+        scene.add(ambientLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        keyLight.position.set(5, 10, 5);
+        keyLight.castShadow = true;
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x4488ff, 0.3);
+        fillLight.position.set(-3, 5, -2);
+        scene.add(fillLight);
+
+        // Flame glow light
+        const flameLight = new THREE.PointLight(0xff8830, 2, 8);
+        flameLight.position.set(0, -2.5, 0);
+        scene.add(flameLight);
+
+        // ── Rocket Group ──
+        const rocketGroup = new THREE.Group();
+
+        // Body (cylinder)
+        const bodyGeo = new THREE.CylinderGeometry(0.5, 0.55, 3, 32);
+        const bodyMat = new THREE.MeshStandardMaterial({
+            color: 0xe8e8e8,
+            metalness: 0.3,
+            roughness: 0.4,
+        });
+        const body = new THREE.Mesh(bodyGeo, bodyMat);
+        body.position.y = 1.5;
+        rocketGroup.add(body);
+
+        // Red stripes
+        const stripeMat = new THREE.MeshStandardMaterial({ color: 0xc0392b, metalness: 0.2, roughness: 0.5 });
+        const stripeGeo = new THREE.CylinderGeometry(0.52, 0.52, 0.08, 32);
+        [-0.2, 0.8, 1.8].forEach(y => {
+            const stripe = new THREE.Mesh(stripeGeo, stripeMat);
+            stripe.position.y = y + 1;
+            rocketGroup.add(stripe);
+        });
+
+        // Nose cone
+        const noseGeo = new THREE.ConeGeometry(0.5, 1.2, 32);
+        const noseMat = new THREE.MeshStandardMaterial({
+            color: 0xc0392b,
+            metalness: 0.2,
+            roughness: 0.5,
+        });
+        const nose = new THREE.Mesh(noseGeo, noseMat);
+        nose.position.y = 3.6;
+        rocketGroup.add(nose);
+
+        // Window
+        const windowGeo = new THREE.SphereGeometry(0.12, 16, 16);
+        const windowMat = new THREE.MeshStandardMaterial({
+            color: 0x44aadd,
+            metalness: 0.8,
+            roughness: 0.1,
+            emissive: 0x224466,
+            emissiveIntensity: 0.5,
+        });
+        const windowMesh = new THREE.Mesh(windowGeo, windowMat);
+        windowMesh.position.set(0, 2.0, 0.5);
+        rocketGroup.add(windowMesh);
+
+        // Engine bell (nozzle)
+        const nozzleGeo = new THREE.CylinderGeometry(0.35, 0.25, 0.4, 16, 1, true);
+        const nozzleMat = new THREE.MeshStandardMaterial({
+            color: 0x444444,
+            metalness: 0.7,
+            roughness: 0.3,
+            side: THREE.DoubleSide,
+        });
+        const nozzle = new THREE.Mesh(nozzleGeo, nozzleMat);
+        nozzle.position.y = -0.2;
+        rocketGroup.add(nozzle);
+
+        // Fins (4 fins)
+        const finShape = new THREE.Shape();
+        finShape.moveTo(0, 0);
+        finShape.lineTo(0.6, -0.8);
+        finShape.lineTo(0.1, -0.8);
+        finShape.lineTo(0, -0.3);
+        finShape.lineTo(0, 0);
+
+        const finGeo = new THREE.ExtrudeGeometry(finShape, { depth: 0.04, bevelEnabled: false });
+        const finMat = new THREE.MeshStandardMaterial({ color: 0xc0392b, metalness: 0.2, roughness: 0.5 });
+
+        for (let i = 0; i < 4; i++) {
+            const fin = new THREE.Mesh(finGeo, finMat);
+            fin.rotation.y = (Math.PI / 2) * i;
+            fin.position.y = 0.3;
+
+            // Position fin at the edge of the body
+            const angle = (Math.PI / 2) * i;
+            fin.position.x = Math.sin(angle) * 0.5;
+            fin.position.z = Math.cos(angle) * 0.5;
+            rocketGroup.add(fin);
+        }
+
+        rocketGroup.position.y = -1;
+        scene.add(rocketGroup);
+
+        // ── Exhaust Particles ──
+        const particleCount = 200;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const velocities = [];
+        const sizes = new Float32Array(particleCount);
+        const colors = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3] = 0;
+            positions[i * 3 + 1] = -100; // Start off-screen
+            positions[i * 3 + 2] = 0;
+            sizes[i] = Math.random() * 0.15 + 0.05;
+            velocities.push({
+                x: (Math.random() - 0.5) * 0.03,
+                y: -(Math.random() * 0.08 + 0.04),
+                z: (Math.random() - 0.5) * 0.03,
+                life: 0,
+                maxLife: Math.random() * 40 + 20,
+            });
+
+            // Orange-yellow flame colors
+            const t = Math.random();
+            colors[i * 3]     = 1;                          // R
+            colors[i * 3 + 1] = 0.4 + t * 0.5;             // G
+            colors[i * 3 + 2] = t < 0.3 ? 0.8 : t * 0.2;  // B (blue core)
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.12,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+        });
+
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // ── Animation State ──
+        let isLaunching = false;
+        let launchProgress = 0;
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        document.getElementById('launchBtn').addEventListener('click', () => {
+            if (isLaunching) {
+                // Reset
+                isLaunching = false;
+                launchProgress = 0;
+                rocketGroup.position.y = -1;
+                rocketGroup.rotation.set(0, 0, 0);
+            } else {
+                isLaunching = true;
+                launchProgress = 0;
+            }
+        });
+
+        // ── Render Loop ──
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = Date.now() * 0.001;
+
+            if (isLaunching) {
+                launchProgress += 0.004;
+                // Accelerating upward
+                const speed = Math.pow(launchProgress, 1.5) * 30;
+                rocketGroup.position.y += speed * 0.02;
+
+                // Slight wobble during launch
+                rocketGroup.rotation.z = Math.sin(time * 8) * 0.02;
+                rocketGroup.rotation.x = Math.sin(time * 6) * 0.01;
+
+                // Increase flame light during launch
+                flameLight.intensity = 3 + Math.sin(time * 20) * 0.5;
+            } else {
+                // Idle: gentle rotation following mouse
+                rocketGroup.rotation.y += (mouseX * 0.6 - rocketGroup.rotation.y) * 0.05;
+                rocketGroup.rotation.x += (mouseY * -0.15 - rocketGroup.rotation.x) * 0.05;
+
+                // Subtle hover bob
+                rocketGroup.position.y = -1 + Math.sin(time * 1.5) * 0.08;
+
+                flameLight.intensity = 2 + Math.sin(time * 10) * 0.3;
+            }
+
+            // Update exhaust particles
+            const posAttr = particleGeo.getAttribute('position');
+            const nozzleWorldPos = new THREE.Vector3(0, -0.4, 0);
+            rocketGroup.localToWorld(nozzleWorldPos);
+
+            for (let i = 0; i < particleCount; i++) {
+                const v = velocities[i];
+                v.life++;
+
+                if (v.life > v.maxLife) {
+                    // Respawn at nozzle
+                    posAttr.array[i * 3]     = nozzleWorldPos.x + (Math.random() - 0.5) * 0.15;
+                    posAttr.array[i * 3 + 1] = nozzleWorldPos.y;
+                    posAttr.array[i * 3 + 2] = nozzleWorldPos.z + (Math.random() - 0.5) * 0.15;
+                    v.x = (Math.random() - 0.5) * 0.03;
+                    v.y = -(Math.random() * 0.08 + 0.04);
+                    v.z = (Math.random() - 0.5) * 0.03;
+                    v.life = 0;
+                    v.maxLife = Math.random() * 40 + 20;
+                } else {
+                    // Move particle
+                    posAttr.array[i * 3]     += v.x;
+                    posAttr.array[i * 3 + 1] += v.y;
+                    posAttr.array[i * 3 + 2] += v.z;
+                    // Spread out over time
+                    v.x *= 1.01;
+                    v.z *= 1.01;
+                    v.y *= 0.995;
+                }
+            }
+            posAttr.needsUpdate = true;
+
+            // Move flame light with rocket
+            flameLight.position.copy(nozzleWorldPos);
+            flameLight.position.y -= 0.5;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    })();
+    </script>
+</body>
+</html>
