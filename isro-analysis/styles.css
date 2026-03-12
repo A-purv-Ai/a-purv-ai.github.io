@@ -549,10 +549,10 @@ body::after {
     font-weight: 700;
     letter-spacing: 4px;
     color: #00d1ff;
-    background: rgba(0, 209, 255, 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1.5px solid rgba(0, 209, 255, 0.35);
+    background: rgba(0, 209, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(0, 209, 255, 0.32);
     border-radius: 50px;
     cursor: pointer;
     box-shadow:
@@ -886,10 +886,10 @@ h1 {
 
 /* Notebook Section */
 .notebook-section {
-    background: rgba(16, 30, 52, 0.45);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(16, 30, 52, 0.4);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
     border-radius: 16px;
     padding: 1.5rem 2rem;
@@ -948,10 +948,10 @@ code {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(12, 24, 44, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(12, 24, 44, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 0 32px rgba(255, 255, 255, 0.02);
     border-radius: 16px;
     padding: 1.8rem;

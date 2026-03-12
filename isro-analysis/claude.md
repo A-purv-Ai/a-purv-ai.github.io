@@ -30,6 +30,8 @@ Deploy by dropping the folder onto any static host (GitHub Pages, Netlify, etc.)
 <!-- Google Fonts (NO preconnect for gstatic — just one link) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- IMPORTANT: preload the background image so it's ready before the intro animation ends -->
+<link rel="preload" as="image" href="milkyway-bg.jpg">
 <link rel="stylesheet" href="styles.css">
 ```
 
@@ -189,8 +191,8 @@ When JS adds class `.launching` to `#intro-splash`:
 ### CSS: Launch Button (`.launch-btn`)
 
 Glassmorphism style: `position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%)`  
-Background: `rgba(0, 209, 255, 0.08)` with `backdrop-filter: blur(18px)`  
-Border: `1px solid rgba(0, 209, 255, 0.35)` with glowing `box-shadow`  
+Background: `rgba(0, 209, 255, 0.07)` with `backdrop-filter: blur(12px)`  
+Border: `1.5px solid rgba(0, 209, 255, 0.32)` with glowing `box-shadow`  
 Font: `'Orbitron'`, `text-transform: uppercase`, bright cyan `color: var(--accent)`
 
 ### JS: Launch Sequence
@@ -387,3 +389,17 @@ Uses "best ratio" logic: among all intersecting sections, picks the one with the
 5. **Panel animations run exactly once** — `animatedPanels` Set prevents re-running them if you scroll back up and then down again.
 6. **LVM3 differs from GSLV/PSLV** — it has an extra `.rb-stripe.mid` inside `.rb3d` AND 4 smoke-puffs (not 3).
 7. **Nozzle flush math** — body ends at `top: 144px` in a `170px` container = `26px` from bottom. Nozzle `height: 14px` at `bottom: 12px` = nozzle top at `26px` = exactly flush. Don't blindly change these values.
+
+---
+
+## 12. Glassmorphism Blur & Opacity Reference
+
+These values were tuned iteratively for visual clarity. Rebuilding from scratch? Start here:
+
+| Element | CSS Class | `backdrop-filter` | Background `rgba` alpha |
+|---|---|---|---|
+| Launch Button | `.launch-btn` | `blur(12px)` | `0.07` |
+| Right Dashboard Panels | `.panel` | `blur(8px)` | `0.5` |
+| Project Nav Section | `.notebook-section` | `blur(7px)` | `0.4` |
+
+> **Tuning tip:** The `backdrop-filter` blur values control how "frosted" the glass looks. Lower values = more of the Milky Way starfield background shows through. Higher values = more legible on complex backgrounds. The current values (~7-12px) prioritise showing the background image while keeping text comfortably readable.
