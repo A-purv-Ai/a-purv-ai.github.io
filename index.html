@@ -1,30 +1,69 @@
 <!DOCTYPE html>
+<!-- 
+  =============================================================================
+  Portfolio Style & Design Courtesy: Apurva Upadhyay
+  Repository: https://github.com/A-purv-Ai/a-purv-ai.github.io
+
+  If you are a developer using this code or design as inspiration, 
+  please provide proper credit linking back to the original repository above.
+  =============================================================================
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Apurva Upadhyay | Data Science & AI Portfolio</title>
+    <title>Apurva Upadhyay | Analytics Engineering &amp; BI Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Portfolio of Apurva Upadhyay, showcasing projects in AI, Machine Learning, and Data Science.">
+    <meta name="description" content="Portfolio of Apurva Upadhyay — Analytics Engineering, Business Intelligence, Data Science, and AI projects.">
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Main Stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Ambient background -->
+    <div class="bg-effects" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="mouse-glow"></div>
+    </div>
+
     <div class="container">
         <header class="hero">
             <h1>Apurva Upadhyay</h1>
-            <div class="subtitle">Data Science & AI — Learning & Building ✨</div>
-            <div class="bio">
-                Analytics explorer, data science and AI enthusiast.<br>
-                This portfolio is a collection of Learning & Building with real datasets, practical tools, and curiosity-driven projects.<br><br>
-                Building strong foundations in Data Science, Analytics, and AI Engineering — from data pipelines and feature engineering to visualization and machine learning experiments.<br>
-                Each project here reflects my journey of growth: applying concepts, experimenting with tools, and turning raw data into meaningful insights.
+            <div class="subtitle">
+                Data Analytics &amp; <span class="rotating-word" id="rotating-word">Analytics Engineering</span>
             </div>
+
+            <!-- Animated tagline: strikethrough → reveal -->
+            <div class="tagline" id="tagline">
+                <span class="tagline-old">Lights, Camera, Action</span>
+                <span class="tagline-new">
+                    <span class="tw">Data</span>
+                    <span class="ta">→</span>
+                    <span class="tw">Insights</span>
+                    <span class="ta">→</span>
+                    <span class="tw">Action</span>
+                </span>
+            </div>
+
+            <!-- SQL Easter Egg -->
+            <div class="sql-block" id="sql-block">
+                <pre><span class="sql-kw">SELECT</span> name, role <span class="sql-kw">FROM</span> talent
+<span class="sql-kw">WHERE</span> curiosity = <span class="sql-str">'infinite'</span>
+  <span class="sql-kw">AND</span> tools <span class="sql-kw">IN</span> (<span class="sql-str">'Python'</span>, <span class="sql-str">'SQL'</span>, <span class="sql-str">'Tableau'</span>, <span class="sql-str">'dbt'</span>,
+                <span class="sql-str">'Pandas'</span>, <span class="sql-str">'Streamlit'</span>);
+<span class="sql-cmt">-- >> Apurva Upadhyay | Business Analyst</span></pre>
+            </div>
+
+            <!-- Terminal typing bio -->
+            <div class="bio" id="bio"></div>
+
             <div class="social-links">
                 <a href="mailto:" target="_blank" title="Email">
                     <svg role="img" viewBox="0 0 24 24"><title>Email</title><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
@@ -40,12 +79,37 @@
 
         <main class="projects-section">
             <h2>Projects</h2>
-            <div class="project-grid">
+            <div class="bento-grid">
 
-                <div class="project-card">
-                    <span class="project-icon">📈</span>
+                <div class="category-tile" id="data-science">
+                    <div class="tile-header">
+                        <span class="tile-icon">🔬</span>
+                        <span class="tile-label">Data Science</span>
+                    </div>
+                    <span class="project-emoji">🛰️</span>
+                    <h3>ISRO Launch Risk Prediction</h3>
+                    <p>Predict launch success probability for ISRO missions using Random Forest ML. Built on scraped Wikipedia data covering PSLV, GSLV &amp; LVM3 — includes the PSLV-C62 anomaly (Jan 2026).</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Random Forest</span>
+                        <span class="tag">SMOTE</span>
+                        <span class="tag">Streamlit</span>
+                        <span class="tag">EDA</span>
+                    </div>
+                    <div class="tile-actions">
+                        <a href="https://a-purv-ai.github.io/isro-analysis/" class="btn">Visit Project</a>
+                        <span class="status-badge live">v1.0 Live — IIT Ropar Major in AI</span>
+                    </div>
+                </div>
+
+                <div class="category-tile" id="data-analysis">
+                    <div class="tile-header">
+                        <span class="tile-icon">📊</span>
+                        <span class="tile-label">Data Analysis</span>
+                    </div>
+                    <span class="project-emoji">📈</span>
                     <h3>10-Year Stock Performance Analysis</h3>
-                    <p>Analysed a decade of equity data (MSFT, IBM, MS, AAPL) using a custom Normalized Close feature for same-scale comparison — concluding that Apple (AAPL) delivered the strongest and most consistent long-term risk-adjusted return. Presented via Executive and Managerial Tableau dashboards.</p>
+                    <p>Analysed a decade of equity data (MSFT, IBM, MS, AAPL) using a custom Normalized Close feature — concluding Apple delivered the strongest risk-adjusted return. Presented via Executive &amp; Managerial Tableau dashboards.</p>
                     <div class="tags">
                         <span class="tag">Python</span>
                         <span class="tag">Financial Analytics</span>
@@ -54,55 +118,132 @@
                         <span class="tag">SQLite</span>
                         <span class="tag">Tableau</span>
                     </div>
-                    <a href="https://a-purv-ai.github.io/stock-analysis/" class="btn">Visit Project</a>
+                    <div class="tile-actions">
+                        <a href="https://a-purv-ai.github.io/stock-analysis/" class="btn">Visit Project</a>
+                    </div>
                 </div>
 
-                <div class="project-card">
-                    <span class="project-icon">🤖</span>
-                    <h3>Email Dashboard & Chatbot</h3>
-                    <p>Automates inbox processing via Gmail API — classifying emails (Urgent, Casual, Promotional) using NLP topic modelling, generating summaries, and enabling natural language queries over email content using a local Llama3 model.</p>
+                <div class="category-tile" id="ai-ml">
+                    <div class="tile-header">
+                        <span class="tile-icon">🤖</span>
+                        <span class="tile-label">AI / ML</span>
+                    </div>
+                    <span class="project-emoji">✉️</span>
+                    <h3>Email Dashboard &amp; Chatbot</h3>
+                    <p>Automates inbox processing via Gmail API — classifying emails using NLP topic modelling, generating summaries, and enabling natural language queries via a local Llama3 model.</p>
                     <div class="tags">
                         <span class="tag">AI</span>
                         <span class="tag">NLP</span>
                         <span class="tag">Gmail API</span>
                         <span class="tag">Llama3</span>
                     </div>
-                    <a href="https://a-purv-ai.github.io/email-chatbot/" class="btn">Visit Project</a>
-                    <p class="status-label in-dev">In Development</p>
+                    <div class="tile-actions">
+                        <a href="https://a-purv-ai.github.io/email-chatbot/" class="btn">Visit Project</a>
+                        <span class="status-badge in-dev">In Development</span>
+                    </div>
                 </div>
 
-                <div class="project-card">
-                    <span class="project-icon">🛰️</span>
-                    <h3>ISRO Launch Risk Prediction</h3>
-                    <p>Predict launch success probability for ISRO missions using Random Forest ML. Built on scraped Wikipedia data covering PSLV, GSLV & LVM3 — includes the PSLV-C62 anomaly (Jan 2026). Helps commercial operators assess mission risk with data-driven probability scores.</p>
-                    <div class="tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Random Forest</span>
-                        <span class="tag">SMOTE</span>
-                        <span class="tag">Streamlit</span>
-                        <span class="tag">EDA</span>
+                <div class="category-tile coming-soon" id="business-analysis">
+                    <div class="tile-header">
+                        <span class="tile-icon">💼</span>
+                        <span class="tile-label">Business Analysis</span>
                     </div>
-                    <a href="https://a-purv-ai.github.io/isro-analysis/" class="btn">Visit Project</a>
-                    <p class="status-label live">v1.0 Live — IIT Ropar Major in AI</p>
+                    <h3>Repos Coming Soon</h3>
+                    <p>Market research, KPI dashboards, process modelling, and stakeholder reporting.</p>
+                    <div class="tags">
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Excel</span>
+                        <span class="tag">Tableau</span>
+                        <span class="tag">Business Intelligence</span>
+                    </div>
+                    <span class="status-badge">Coming Soon</span>
                 </div>
 
-                <div class="project-card">
-                    <span class="project-icon">🧩</span>
-                    <h3>More Projects Ahead</h3>
-                    <p>New data journeys, experiments, and stories will appear here as I keep learning, coding, and building.</p>
-                    <div class="tags">
-                        <span class="tag">Your Idea?</span>
-                        <span class="tag">Stay Tuned</span>
+                <div class="category-tile coming-soon" id="ai-agents">
+                    <div class="tile-header">
+                        <span class="tile-icon">🦾</span>
+                        <span class="tile-label">AI Agents</span>
                     </div>
-                    <p class="status-label">Coming Soon</p>
+                    <h3>Repos Coming Soon</h3>
+                    <p>Multi-step reasoning, tool-use, memory, and orchestration with agentic frameworks.</p>
+                    <div class="tags">
+                        <span class="tag">LangChain</span>
+                        <span class="tag">AutoGen</span>
+                        <span class="tag">Agentic AI</span>
+                        <span class="tag">LLMs</span>
+                    </div>
+                    <span class="status-badge">Coming Soon</span>
                 </div>
 
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 Apurva Upadhyay. Built with passion and code.</p>
+            <p>&copy; 2026 Apurva Upadhyay. Crafted with intent, data, design, and code.</p>
+            <p class="design-credit">
+                Inspired by this design? Feel free to adapt this work, a small credit back to the <a href="https://github.com/A-purv-Ai/a-purv-ai.github.io" target="_blank">original repository</a> would mean a lot :)
+            </p>
         </footer>
     </div>
+
+    <script>
+        /* ── Scroll Progress Bar ── */
+        window.addEventListener('scroll', () => {
+            const pct = (document.documentElement.scrollTop /
+                (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-progress').style.width = pct + '%';
+        });
+
+        /* ── Mouse Glow ── */
+        const glow = document.querySelector('.mouse-glow');
+        document.addEventListener('mousemove', e => {
+            glow.style.transform = `translate(${e.clientX - 200}px, ${e.clientY - 200}px)`;
+        });
+
+        /* ── Rotating Word ── */
+        const words = ['Analytics Engineering', 'Business Intelligence', 'Data Science', 'Machine Learning',
+                       'Strategic Insights', 'Data Storytelling', 'Agentic AI'];
+        let wIdx = 0;
+        const rEl = document.getElementById('rotating-word');
+        setInterval(() => {
+            wIdx = (wIdx + 1) % words.length;
+            rEl.classList.add('fade-out');
+            setTimeout(() => { rEl.textContent = words[wIdx]; rEl.classList.remove('fade-out'); }, 400);
+        }, 2800);
+
+        /* ── Strikethrough Tagline ── */
+        setTimeout(() => document.getElementById('tagline').classList.add('animate'), 1200);
+
+        /* ── SQL Block fade-in ── */
+        setTimeout(() => document.getElementById('sql-block').classList.add('visible'), 2000);
+
+        /* ── Terminal Typing Bio ── */
+        const bioText = "Business Analyst, data professional, and AI enthusiast.\nThis portfolio showcases end-to-end solutions transforming complex datasets into actionable business intelligence.\n\nMy focus is on bridging the gap between raw data and strategic decisions. I build robust pipelines across Data Analytics, Machine Learning, and AI Engineering, spanning from data modeling and feature engineering to interactive visualization and agentic systems.\nEach project reflects a commitment to solving real-world business problems, optimizing workflows, and driving clarity through data.";
+        const bioEl = document.getElementById('bio');
+        let ci = 0;
+        function typeBio() {
+            if (ci <= bioText.length) {
+                bioEl.innerHTML = bioText.substring(0, ci).replace(/\n/g, '<br>') + '<span class="cursor">|</span>';
+                ci++;
+                setTimeout(typeBio, 16);
+            } else {
+                bioEl.innerHTML = bioText.replace(/\n/g, '<br>');
+            }
+        }
+        setTimeout(typeBio, 2500);
+
+        /* ── Intelligent Implant (Console Credit) ── */
+        console.log("%c✨ Enjoying the portfolio design?", "color: #00d1ff; font-size: 16px; font-weight: bold;");
+        console.log("%cFeel free to use it as inspiration! Please provide a design credit linking back to: https://github.com/A-purv-Ai/a-purv-ai.github.io", "font-size: 12px; color: #8892A8;");
+
+        /* ── Tile Entrance Animations ── */
+        const tObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); tObs.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.category-tile').forEach((t, i) => {
+            t.style.transitionDelay = `${i * 0.1}s`;
+            tObs.observe(t);
+        });
+    </script>
 </body>
 </html>

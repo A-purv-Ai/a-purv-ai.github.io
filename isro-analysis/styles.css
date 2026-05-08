@@ -31,15 +31,23 @@
 body {
     margin: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    /* Removed background: var(--dark-bg) so ::before placeholder at z-index -3 is visible */
-    background-color: transparent; 
+    /* background is intentionally transparent so the fixed ::before pseudo-element
+       (tiny Milky Way placeholder, z-index -3) is visible behind all content. */
+    background-color: transparent;
     color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.7;
 }
 
-/* ── Progressive Milky Way Background ──────────────────── */
-/* 1. Instant tiny placeholder (blurred) */
+/* ── Progressive Milky Way Background ──────────────────────────────────────
+   Three fixed layers stacked by z-index:
+     -3  body::before — tiny blurred placeholder (instant, always visible)
+     -2  .bg-hi-res   — full-res image (fades in once loaded)
+     -1  body::after  — semi-transparent dark gradient for text readability
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Layer -3: tiny blurred placeholder shown instantly while hi-res loads.
+   scale(1.1) prevents the blur from revealing white/transparent edges. */
 body::before {
     content: '';
     position: fixed;
@@ -48,12 +56,13 @@ body::before {
     width: 100%;
     height: 100%;
     background: url('milkyway-bg-tiny.jpg') center center / cover no-repeat fixed;
-    z-index: -3; /* Placed completely at bottom */
+    z-index: -3;
     filter: blur(20px);
-    transform: scale(1.1); /* Hides blurred, white edges */
+    transform: scale(1.1); /* slightly oversizes to hide blurred edges */
 }
 
-/* 2. High-res final image (fades in) */
+/* Layer -2: full-resolution Milky Way image, initially invisible.
+   JS adds .loaded once the image has downloaded, triggering a 3 s crossfade. */
 .bg-hi-res {
     position: fixed;
     top: 0;
@@ -61,17 +70,18 @@ body::before {
     width: 100%;
     height: 100%;
     background: url('milkyway-bg.jpg') center center / cover no-repeat fixed;
-    z-index: -2; /* Above placeholder, below everything else */
+    z-index: -2; /* above placeholder, below all page content */
     opacity: 0;
-    transition: opacity 3s ease-out; /* Extended 3-second crossfade for smoother loading */
-    pointer-events: none;
+    transition: opacity 3s ease-out; /* 3 s crossfade so the swap is imperceptible */
+    pointer-events: none; /* does not capture clicks */
 }
 
 .bg-hi-res.loaded {
-    opacity: 1;
+    opacity: 1; /* JS sets this class after the image finishes loading */
 }
 
-/* Dark overlay for readability */
+/* Layer -1: gradient overlay that darkens the photo just enough for text
+   contrast without fully obscuring the Milky Way imagery. */
 body::after {
     content: '';
     position: fixed;
@@ -87,7 +97,10 @@ body::after {
     z-index: -1;
 }
 
-/* ── Starfield (subtle twinkle overlay on photo) ───────── */
+/* ── Starfield: JS-generated .star dots placed over the background ─────────
+   z-index 0 puts the layer above the background images (-2, -3) but below
+   all body content. opacity: 0.4 keeps stars subtle so they complement
+   rather than compete with the Milky Way photo. */
 #starfield {
     position: fixed;
     top: 0;
@@ -95,7 +108,7 @@ body::after {
     width: 100%;
     height: 100%;
     z-index: 0;
-    pointer-events: none;
+    pointer-events: none; /* transparent to mouse/touch events */
     opacity: 0.4;
 }
 
@@ -144,7 +157,8 @@ body::after {
     box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* ── Rocket (background accent — disabled, intro replaces it) ── */
+/* ── Legacy .rocket-container: hidden — the CSS 3D intro-splash rockets
+   replaced this earlier decorative element. Kept in HTML/CSS for reference. */
 .rocket-container {
     display: none;
 }
@@ -167,14 +181,16 @@ body::after {
     justify-content: center;
 }
 
-/* ── Wrapper for each rocket ────────────────────────────── */
+/* ── Per-rocket wrapper — absolutely positioned inside #intro-splash.
+   Rockets sit 80 px from the bottom in their idle state.
+   Launch keyframe animations are applied via the parent .launching class. */
 .intro-rocket-3d {
     position: absolute;
     bottom: 80px;
-    /* Default is idle, animations are applied via .launching class */
 }
 
-/* Vehicle label — hidden (type is embossed on body instead) */
+/* Vehicle label text: hidden because the type name is embossed directly
+   on the rocket body via .rb-type, so a separate label is redundant. */
 .rocket-label {
     display: none;
 }
@@ -346,8 +362,10 @@ body::after {
     border-top: 24px solid #881a1a;
 }
 
-/* ── Engine Nozzle ──────────────────────────────────────── */
-/* Body (.rb3d) ends at top:144px in a 170px container → flush offset = 170-144-14 = 12px from bottom */
+/* ── Engine Nozzle ──────────────────────────────────────────────────────────
+   Positioned at bottom: 10 px inside the 170 px rocket-3d container so it
+   sits flush at the base of the cylindrical body (.rb3d) and visually
+   connects to the exhaust plume below. z-index 4 keeps it in front of fins. */
 .engine-nozzle {
     position: absolute;
     bottom: 10px;
@@ -356,7 +374,7 @@ body::after {
     width: 24px;
     height: 14px;
     background: linear-gradient(180deg, #555, #333, #222);
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px; /* tapered bell shape */
     z-index: 4;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
@@ -372,11 +390,13 @@ body::after {
     border-radius: 2px;
 }
 
-/* ── Exhaust & Flame ────────────────────────────────────── */
-/* Positioned so flame starts ~8px below the nozzle exit (bottom:12px nozzle + 14px height = 26px from container bottom, exhaust group top at ~26-8=18px from bottom) */
+/* ── Exhaust & Flame ────────────────────────────────────────────────────────
+   .exhaust-group is the container for all flame/smoke children. It is placed
+   60 px below the rocket container's bottom edge so the plume appears just
+   beneath the engine nozzle without overlapping the body. */
 .exhaust-group {
     position: absolute;
-    bottom: -60px;
+    bottom: -60px;       /* extends below the 170 px rocket-3d container */
     left: 50%;
     transform: translateX(-50%);
     width: 36px;
@@ -420,31 +440,35 @@ body::after {
     filter: blur(1.5px);
 }
 
+/* Wide ambient halo beneath the nozzle that softly illuminates the launch
+   pad area. The radial gradient is anchored at 40 % from the top so the
+   hottest glow aligns with the base of the flame, not the very bottom of
+   the element. width/height are intentionally large so the soft edges fade
+   out gracefully without hard clipping. */
 .exhaust-glow {
     position: absolute;
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 110px;
-    /* Increased to compensate for the 40% stop */
+    width: 110px;  /* wider than the flame to create a diffuse halo effect */
     height: 120px;
-    /* Optional: increase height slightly too */
-
     background: radial-gradient(ellipse at center 40%,
             rgba(255, 150, 30, 0.2) 0%,
             rgba(255, 100, 20, 0.08) 40%,
             transparent 60%);
-    animation: glow-throb 0.3s infinite alternate;
+    animation: glow-throb 0.3s infinite alternate; /* gentle brightness pulse */
 }
 
-/* Smoke puffs */
+/* Smoke puffs: circular blobs that drift upward (puff-rise keyframe) to
+   simulate billowing launch smoke. Each .smoke-puff:nth-child sibling has
+   a unique offset, size, and animation-delay for visual variety. */
 .smoke-puff {
     position: absolute;
     bottom: -15px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(200, 200, 200, 0.35), transparent);
     animation: puff-rise 1.2s ease-out infinite;
-    filter: blur(5px);
+    filter: blur(5px); /* heavy blur makes each puff soft and cloud-like */
 }
 
 .smoke-puff:nth-child(4) {
@@ -475,14 +499,16 @@ body::after {
     animation-delay: 0.75s;
 }
 
-/* Exhaust hidden when idle */
+/* Hide exhaust plume in idle state; reveal it when .launching is added to
+   #intro-splash (by the launch button click handler). The 0.4 s fade-in
+   makes the engine ignition feel gradual rather than instantly on/off. */
 .intro-rocket-3d .exhaust-group {
     opacity: 0;
     transition: opacity 0.4s ease;
 }
 
 #intro-splash.launching .intro-rocket-3d .exhaust-group {
-    opacity: 1;
+    opacity: 1; /* exhaust becomes visible as soon as launch is triggered */
 }
 
 @keyframes flame-pulse {
@@ -599,11 +625,12 @@ body::after {
     transform: translateX(-50%) scale(0.97);
 }
 
-/* Hide button after launch */
+/* Slide the Launch button down and fade it out the moment .launching is
+   applied, so it doesn't linger over the ascending rockets. */
 #intro-splash.launching .launch-btn {
     opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-    pointer-events: none;
+    transform: translateX(-50%) translateY(20px); /* drift down slightly as it fades */
+    pointer-events: none; /* prevent accidental re-clicks during animation */
 }
 
 /* ═══ LAUNCH ANIMATION (only when .launching) ═══════════ */
@@ -623,7 +650,11 @@ body::after {
 }
 
 
-/* ═══ LAUNCH KEYFRAMES — simple from/to, cubic-bezier handles the acceleration ═══ */
+/* ═══ LAUNCH KEYFRAMES ══════════════════════════════════════════════════════
+   Each rocket uses a simple from/to definition; the cubic-bezier on the
+   animation-timing-function (0.32, 0, 0.67, 0.2) provides a slow start
+   followed by rapid acceleration, mimicking real launch thrust curves.
+   Side rockets (.r-left, .r-right) also drift horizontally for visual spread. */
 
 @keyframes rocket-ascend {
     from {
@@ -660,11 +691,14 @@ body::after {
 }
 
 
-/* ═══ CONTENT REVEAL AFTER LAUNCH ═══════════════════════ */
+/* ═══ CONTENT REVEAL AFTER LAUNCH ═══════════════════════════════════════════
+   Before the intro is complete, the main content and portfolio tab are hidden
+   (opacity 0, offset by transform) and the page scroll is locked. JS adds
+   .intro-complete to <body> after the rockets clear the viewport, triggering
+   the CSS transitions below to fade-slide everything into place. */
 
-/* Base content hidden before intro finishes */
 body:not(.intro-complete) {
-    overflow: hidden;
+    overflow: hidden; /* prevent scrolling during the rocket intro sequence */
 }
 
 body:not(.intro-complete) .mission-control {
@@ -684,17 +718,19 @@ body:not(.intro-complete) .portfolio-tab {
 
 .mission-control {
     position: relative;
-    z-index: 10;
+    z-index: 10;         /* sits above all background layers */
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem 2.5rem 4rem;
+    /* Two-column grid: fluid narrative column + fixed 420 px dashboard panel */
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 2.5rem;
     align-items: start;
+    /* 1.2 s ease-in reveal transition; 0.2 s delay lets rockets start
+       ascending before the content fades up into view. */
     transition: opacity 1.2s cubic-bezier(.22, 1, .36, 1), transform 1.2s cubic-bezier(.22, 1, .36, 1);
     transition-delay: 0.2s;
-    /* delay content appearance slightly after rockets clear */
 }
 
 /* ── Left: Narrative Column ────────────────────────────── */
@@ -762,7 +798,8 @@ h1 {
     border-radius: 16px;
     padding: 1.8rem 2rem;
     margin-bottom: 1.5rem;
-    /* Entrance animation — starts hidden */
+    /* Sections start hidden and offset downward; JS adds .visible via
+       IntersectionObserver when the section enters the viewport. */
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 0.7s cubic-bezier(.22, 1, .36, 1),
@@ -916,6 +953,8 @@ h1 {
     border-radius: 16px;
     padding: 1.5rem 2rem;
     margin-top: 0.5rem;
+    /* Same entrance animation as .narrative-section; JS adds .visible via
+       the shared sectionObserver when the element scrolls into view. */
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 0.7s cubic-bezier(.22, 1, .36, 1),
@@ -1269,6 +1308,10 @@ code {
     justify-content: center;
 }
 
+/* Draws the arc fill using a conic-gradient driven by the --pct CSS custom
+   property. The radial-gradient mask punches a transparent hole in the centre
+   to create the donut ring shape. JS animates --pct from 0% to the target
+   value, which visually sweeps the coloured arc around the ring. */
 .stat-ring::before {
     content: '';
     position: absolute;
@@ -1277,7 +1320,7 @@ code {
     background: conic-gradient(var(--accent) 0%,
             var(--accent) var(--pct),
             rgba(0, 209, 255, 0.1) var(--pct));
-    mask: radial-gradient(transparent 60%, black 61%);
+    mask: radial-gradient(transparent 60%, black 61%); /* creates the donut cutout */
     -webkit-mask: radial-gradient(transparent 60%, black 61%);
     transition: --pct 1.2s ease;
 }
@@ -1296,7 +1339,8 @@ code {
     letter-spacing: 1px;
 }
 
-/* Feature importance bars */
+/* Feature importance bar chart: each .feature-bar-fill starts at width 0
+   and is expanded to data-width by JS (animateResults) after the rings. */
 .feature-bars {
     margin-top: 0.5rem;
 }
@@ -1411,7 +1455,8 @@ code {
     margin-top: 0.3rem;
 }
 
-/* mini chart bars for demo panel */
+/* Mini bar chart inside Panel 5 (Demo): shows per-vehicle success rates.
+   Bars animate from 0 → data-width via JS animateDemo after 500 ms. */
 .mini-chart {
     margin-top: 1.2rem;
 }
@@ -1580,23 +1625,25 @@ code {
 }
 
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE  <  900px
-   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE  <  900px  (tablet / mobile)
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 900px) {
+    /* Collapse to single-column layout: narrative fills full width. */
     .mission-control {
         grid-template-columns: 1fr;
         padding: 1rem 1rem 3rem;
         gap: 0;
     }
 
+    /* Hide the sticky dashboard panel on mobile — all content is in the
+       narrative column, so the panel is redundant on small screens. */
     .dashboard-panel {
         position: relative;
         top: auto;
         max-height: none;
         display: none;
-        /* hide sticky panel on mobile — content is self-sufficient */
     }
 
     .page-header {

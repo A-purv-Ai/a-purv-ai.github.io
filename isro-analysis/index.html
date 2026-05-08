@@ -523,94 +523,115 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        // ── Always start from top on load/refresh ────────────
+        // ── Scroll reset: force page to top on every load/refresh ──
+        // Prevents browsers from restoring a previous scroll position.
         window.scrollTo(0, 0);
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-        // ── Fullscreen on Portfolio Link Click ───────────────
+        // ── Portfolio tab: navigate to portfolio site on click ──
+        // The <a> tag already handles navigation; this listener is a
+        // fallback for programmatic navigation (e.g. if default is prevented).
         const portfolioTab = document.querySelector('.portfolio-tab');
         if (portfolioTab) {
             portfolioTab.addEventListener('click', function() {
-                const el = document.documentElement;
-                if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
-                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+                window.location.href = 'https://a-purv-ai.github.io';
             });
         }
 
-        // ── Intro Launch Button ────────────────────────────
+        // ── Launch button: starts the intro rocket animation sequence ──
         const launchBtn = document.getElementById('launchBtn');
         const splash = document.getElementById('intro-splash');
 
         if (launchBtn && splash) {
             launchBtn.addEventListener('click', function() {
-                // Request fullscreen for immersive experience
+                // Request fullscreen for an immersive launch experience
+                // (fails silently if the browser blocks it, e.g. due to permissions).
                 const el = document.documentElement;
                 if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
-                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); // Safari fallback
 
-                // Ignite!
+                // Add .launching class → triggers CSS keyframe animations that
+                // fly the three CSS rockets off-screen and show their exhaust plumes.
                 splash.classList.add('launching');
 
-                // After rockets clear screen, fade out splash and reveal content
+                // After 4.2 s the rockets have cleared the viewport.
+                // Fade the splash overlay out over 0.8 s, then remove it from the DOM.
+                // .intro-complete on <body> lifts the opacity/transform that hides
+                // the main content (mission-control + portfolio tab).
                 setTimeout(() => {
                     splash.style.opacity = '0';
-                    setTimeout(() => splash.remove(), 800);
+                    setTimeout(() => splash.remove(), 800); // 0.8 s matches CSS transition
                     document.body.classList.add('intro-complete');
-                }, 4200); // Increased to 4.2s to give the bg image more time to load and fade in smoothly
+                }, 4200); // 4.2 s gives the Milky Way hi-res bg enough time to load and start fading in
             });
         }
 
-        // ── Starfield ───────────────────────────────────────
+        // ── Starfield: procedurally generate 150 twinkling star dots ──
+        // Each .star element is positioned randomly across the fixed #starfield
+        // layer and given a randomised CSS 'twinkle' animation delay/duration.
         const starfield = document.getElementById('starfield');
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
+            star.style.width = star.style.height = `${Math.random() * 2 + 1}px`; // 1–3 px diameter
             star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.animationDelay = `${Math.random() * 5}s`;
-            star.style.animationDuration = `${Math.random() * 3 + 4}s`;
+            star.style.top  = `${Math.random() * 100}%`;
+            star.style.animationDelay    = `${Math.random() * 5}s`;   // stagger twinkle start
+            star.style.animationDuration = `${Math.random() * 3 + 4}s`; // 4–7 s per cycle
             starfield.appendChild(star);
         }
 
-        // ── Entrance Animations (left sections) ────────────
+        // ── Scroll-entrance animations for narrative sections (left column) ──
+        // Uses IntersectionObserver: when ≥15 % of a section enters the viewport
+        // (with a −50 px bottom margin so it fires a little early), .visible is
+        // added which transitions opacity 0→1 and translateY 28px→0 via CSS.
+        // Sections are staggered by 80 ms per observed entry order to avoid
+        // all of them animating simultaneously on initial page-load.
         const sections = document.querySelectorAll('.narrative-section, .notebook-section');
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
-                    // Stagger the animation slightly based on order
                     setTimeout(() => {
-                        entry.target.classList.add('visible');
+                        entry.target.classList.add('visible'); // triggers CSS fade-up transition
                     }, i * 80);
-                    sectionObserver.unobserve(entry.target);
+                    sectionObserver.unobserve(entry.target); // animate once, then stop observing
                 }
             });
         }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
         sections.forEach(s => sectionObserver.observe(s));
 
-        // ── Dashboard Panel Switching ───────────────────────
+        // ── Sticky right-panel switcher (scroll-linked) ─────────────────────
+        // Each left-column .narrative-section carries a [data-panel] attribute
+        // (e.g. data-panel="approach"). The matching right-column .panel element
+        // carries [data-for="approach"]. As the user scrolls, the panel whose
+        // corresponding section is most visible in the viewport becomes .active
+        // (CSS fades it in), while all other panels lose .active.
         const narrativeSections = document.querySelectorAll('.narrative-section[data-panel]');
         const panels = document.querySelectorAll('.panel[data-for]');
-        let activePanel = 'problem';
+        let activePanel = 'problem'; // default panel shown before any scroll
 
+        // switchPanel: deactivates all panels and activates the target one,
+        // then fires the one-time entrance animation for that panel's contents.
         function switchPanel(panelName) {
-            if (panelName === activePanel) return;
+            if (panelName === activePanel) return; // already active — no-op
             activePanel = panelName;
 
             panels.forEach(p => {
                 if (p.dataset.for === panelName) {
-                    p.classList.add('active');
-                    // Trigger panel-specific animations
-                    animatePanel(p, panelName);
+                    p.classList.add('active');       // CSS slides panel in from right
+                    animatePanel(p, panelName);      // run charts/counters on first view
                 } else {
-                    p.classList.remove('active');
+                    p.classList.remove('active');    // CSS fades other panels out
                 }
             });
         }
 
+        // IntersectionObserver watches every narrative section at three thresholds.
+        // On each callback, the section with the highest intersection ratio wins
+        // and its linked panel is switched to. The rootMargin clips the top/bottom
+        // so mid-screen sections take priority over partially-visible ones.
         const panelObserver = new IntersectionObserver((entries) => {
-            // Find the most visible section
             let best = null;
             let bestRatio = 0;
             entries.forEach(entry => {
@@ -626,38 +647,32 @@
 
         narrativeSections.forEach(s => panelObserver.observe(s));
 
-        // Initial panel animation
+        // Kick off the initial 'problem' panel animation 400 ms after DOMContentLoaded,
+        // giving the intro splash time to settle before the panel appears.
         setTimeout(() => animatePanel(document.querySelector('.panel[data-for="problem"]'), 'problem'), 400);
 
-        // ── Panel-Specific Animations ───────────────────────
+        // ── Panel-specific one-shot animations ───────────────────────────────
+        // animatedPanels tracks which panels have already played their animation
+        // so they don't re-run every time the user scrolls back to that section.
         const animatedPanels = new Set();
 
+        // animatePanel: dispatches to the correct animation helper based on
+        // the panel name. Each helper runs exactly once per page load.
         function animatePanel(panel, name) {
-            if (!panel || animatedPanels.has(name)) return;
+            if (!panel || animatedPanels.has(name)) return; // guard: skip if already played
             animatedPanels.add(name);
 
             switch (name) {
-                case 'problem':
-                    animateTimeline(panel);
-                    break;
-                case 'approach':
-                    animatePipeline(panel);
-                    break;
-                case 'tools':
-                    animateTechGrid(panel);
-                    break;
-                case 'results':
-                    animateResults(panel);
-                    break;
-                case 'demo':
-                    animateDemo(panel);
-                    break;
-                case 'roadmap':
-                    animateRoadmap(panel);
-                    break;
+                case 'problem':  animateTimeline(panel);  break; // stagger timeline items in
+                case 'approach': animatePipeline(panel);  break; // slide pipeline steps in
+                case 'tools':    animateTechGrid(panel);  break; // pop-in tech badge grid
+                case 'results':  animateResults(panel);   break; // count-up rings + fill bars
+                case 'demo':     animateDemo(panel);      break; // count-up prediction + bars
+                case 'roadmap':  animateRoadmap(panel);   break; // stagger roadmap steps in
             }
         }
 
+        // Stagger each .timeline-item into view (120 ms apart) via .animate-in.
         function animateTimeline(panel) {
             const items = panel.querySelectorAll('.timeline-item');
             items.forEach((item, i) => {
@@ -665,6 +680,7 @@
             });
         }
 
+        // Slide each ML pipeline .pipe-step in from the left (140 ms apart).
         function animatePipeline(panel) {
             const steps = panel.querySelectorAll('.pipe-step');
             steps.forEach((step, i) => {
@@ -672,6 +688,7 @@
             });
         }
 
+        // Scale each .tech-badge from 0.9 → 1 in a staggered pop-in (90 ms apart).
         function animateTechGrid(panel) {
             const badges = panel.querySelectorAll('.tech-badge');
             badges.forEach((badge, i) => {
@@ -680,34 +697,35 @@
         }
 
         function animateResults(panel) {
-            // Animate stat rings
+            // Drive conic-gradient stat rings: set --pct CSS custom property to
+            // the target percentage, and run countUp on the inner text number.
             const rings = panel.querySelectorAll('.stat-ring');
             rings.forEach(ring => {
                 const valEl = ring.querySelector('.stat-value[data-target]');
                 if (valEl) {
                     const target = parseInt(valEl.dataset.target);
-                    ring.style.setProperty('--pct', target + '%');
-                    countUp(valEl, target, 1200);
+                    ring.style.setProperty('--pct', target + '%'); // animates the arc fill
+                    countUp(valEl, target, 1200);                  // counts the number label up
                 }
             });
 
-            // Animate feature bars
+            // After a short delay, expand feature importance bars from 0 → data-width.
             setTimeout(() => {
                 panel.querySelectorAll('.feature-bar-fill').forEach(bar => {
-                    bar.style.width = bar.dataset.width;
+                    bar.style.width = bar.dataset.width; // CSS transition handles the animation
                 });
-            }, 400);
+            }, 400); // 400 ms lag lets the rings start first
         }
 
         function animateDemo(panel) {
-            // Animate prediction value
+            // Count the predicted probability value up from 0 % to data-target %.
             const predVal = panel.querySelector('.pred-result-value[data-target]');
             if (predVal) {
                 const target = parseInt(predVal.dataset.target);
                 countUp(predVal, target, 1000, '%');
             }
 
-            // Animate mini chart bars
+            // After 500 ms, expand the "Success Rate by Vehicle" mini-chart bars.
             setTimeout(() => {
                 panel.querySelectorAll('.mini-bar-fill').forEach(bar => {
                     bar.style.width = bar.dataset.width;
@@ -715,6 +733,7 @@
             }, 500);
         }
 
+        // Stagger each roadmap step into view from below (150 ms apart) via .animate-in.
         function animateRoadmap(panel) {
             const steps = panel.querySelectorAll('.roadmap-step');
             steps.forEach((step, i) => {
@@ -722,32 +741,40 @@
             });
         }
 
-        // ── Count-Up Utility ────────────────────────────────
+        // ── countUp: animates a number from 0 to `target` over `duration` ms ──
+        // Uses requestAnimationFrame for smooth, display-rate-independent updates.
+        // An ease-out cubic curve (1 − (1−t)³) makes the number decelerate near
+        // the end for a more natural feel. An optional suffix (e.g. '%') is
+        // appended to the displayed value on every frame.
         function countUp(el, target, duration, suffix = '') {
             const start = 0;
             const startTime = performance.now();
 
             function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                // Ease-out cubic
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const current = Math.round(start + (target - start) * eased);
+                const elapsed  = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
+                const eased    = 1 - Math.pow(1 - progress, 3);  // ease-out cubic
+                const current  = Math.round(start + (target - start) * eased);
                 el.textContent = current + suffix;
 
                 if (progress < 1) {
-                    requestAnimationFrame(update);
+                    requestAnimationFrame(update); // continue until animation completes
                 }
             }
             requestAnimationFrame(update);
         }
 
-        // ── Progressive Background Fade-In ──────────────────
+        // ── Progressive Milky Way background: hi-res fade-in ───────────────
+        // The tiny blurred placeholder (milkyway-bg-tiny.jpg) is already visible
+        // via the body::before CSS pseudo-element. Here we silently pre-load the
+        // full-resolution image; once it's decoded and cached by the browser, we
+        // add .loaded to #hiResBg which triggers a 3 s CSS opacity 0→1 crossfade
+        // over the blurred placeholder, revealing the sharp Milky Way photo.
         const hiResBg = document.getElementById('hiResBg');
         if (hiResBg) {
             const bgImg = new Image();
             bgImg.src = 'milkyway-bg.jpg';
-            bgImg.onload = () => hiResBg.classList.add('loaded');
+            bgImg.onload = () => hiResBg.classList.add('loaded'); // starts CSS crossfade
         }
 
     });
